@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcfa8ce238be45168918e12f2feb267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brainForce: 1000
+  brainForce: 10
   headForce: 10
   torsoForce: 10
   armsForce: 10

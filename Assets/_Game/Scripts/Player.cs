@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         _transform = transform;
         _rb = playerObject.GetComponent<Rigidbody>();
-        _triggerObj = _transform.Find("PlayerTrigger");
+        //_triggerObj = _transform.Find("PlayerTrigger");
     }
 
 

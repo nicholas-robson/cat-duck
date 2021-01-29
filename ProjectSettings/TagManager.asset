@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Walkable
+  - GroundTrigger
+  - Enemy
+  - Interactable
+  - Player
   - 
   - 
   - 
