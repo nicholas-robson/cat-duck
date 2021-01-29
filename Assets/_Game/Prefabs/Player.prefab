@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcfa8ce238be45168918e12f2feb267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brainForce: 100
+  brainForce: 1000
   headForce: 10
   torsoForce: 10
   armsForce: 10
@@ -61,6 +61,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6397655357971945610}
   - component: {fileID: 1392306968739197397}
+  - component: {fileID: 6923863134306541568}
   m_Layer: 7
   m_Name: PlayerTrigger
   m_TagString: Untagged
@@ -96,6 +97,18 @@ CapsuleCollider:
   m_Height: 1.5080068
   m_Direction: 1
   m_Center: {x: 0, y: 0.1127311, z: 0}
+--- !u!114 &6923863134306541568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4985254134618161611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5139cb0240040fe856649192241de0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7800116932862272117
 GameObject:
   m_ObjectHideFlags: 0

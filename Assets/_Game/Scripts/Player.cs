@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     Transform _transform;
     Rigidbody _rb;
+    Transform _triggerObj;
 
     public GameObject playerObject;
 
@@ -25,12 +26,12 @@ public class Player : MonoBehaviour
     {
         _transform = transform;
         _rb = playerObject.GetComponent<Rigidbody>();
+        _triggerObj = _transform.Find("PlayerTrigger");
     }
 
 
     void Update()
     {
-        Debug.Log(grounded);
         HandleHotkeys();
 
         
@@ -38,7 +39,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _transform.position = playerObject.transform.position;
+        //_transform.position = playerObject.transform.position;
+        _triggerObj.position = playerObject.transform.position;
 
     }
 
@@ -59,8 +61,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("What");
-            _rb.AddForce(Vector3.up * brainForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * brainForce, ForceMode.Acceleration);
         }
 
     }
