@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class GroundTrigger : MonoBehaviour
 {
-    Player _player;
+    Brain _brain;
 
     private void Awake()
     {
-        _player = GetComponentInParent<Player>();
+        _brain = GetComponentInParent<Brain>();
         
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        _player.OnTriggerEnter(other);
+        _brain.OnTriggerEnter(other);
         
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _player.OnTriggerExit(other);
+        _brain.OnTriggerExit(other);
     }
 }
