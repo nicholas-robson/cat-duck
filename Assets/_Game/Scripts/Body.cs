@@ -57,6 +57,7 @@ public class Body : MonoBehaviour
     public void EjectBrain(Transform parent)
     {
         StartCoroutine(DisableCollectableColliderForTime(1));
+        Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
 
         _brain.transform.parent = parent;
         _brain.transform.localScale = Vector3.one * 0.5f;
