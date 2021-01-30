@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     {
         HandleInputs();
 
-
     }
 
     private void FixedUpdate()
@@ -35,7 +34,15 @@ public class Player : MonoBehaviour
 
     public void OnCollectableEnter(Collider other)
     {
+        SetBody(other.GetComponentInParent<Body>());
+    }
 
+    public void SetBody(Body body)
+    {
+        _body = body;
+        // TODO make more efficient? Don't overengineer tho
+        _body.transform.parent = transform;
+        _body.SetBrain(_brain);
     }
 
 

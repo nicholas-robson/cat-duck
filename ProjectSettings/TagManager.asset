@@ -17,8 +17,8 @@ TagManager:
   - InteractableTrigger
   - Player
   - Interactable
-  - 
-  - 
+  - Collectable
+  - CollectableTrigger
   - 
   - 
   - 

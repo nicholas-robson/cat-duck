@@ -4,14 +4,15 @@ public class Body : MonoBehaviour
 {
     private bool _hasBrain;
     private Brain _brain;
-    private Transform _triggerObj;
+    //private Transform _triggerObj;
     private Transform _transform;
     private Moveable _movable;
+    [SerializeField] Transform _brainPlaceholderPosition;
 
     private void Awake()
     {
         _transform = transform;
-        _triggerObj = _transform.Find("PlayerTrigger");
+        //_triggerObj = _transform.Find("PlayerTrigger");
         _movable = GetComponent<Moveable>();
     }
 
@@ -19,6 +20,7 @@ public class Body : MonoBehaviour
     {
         _hasBrain = true;
         _brain = brain;
+        _brain.transform.parent = _brainPlaceholderPosition;
     }
 
     public void EjectBrain()
