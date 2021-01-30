@@ -17,6 +17,9 @@ public class Body : MonoBehaviour
     private Transform _centerOfMass;
 
     AudioSource _audioSource;
+    [SerializeField] GameObject SetBrainParticles;
+
+
     SphereCollider _collectableCollider;
 
     private void Awake()
@@ -32,6 +35,8 @@ public class Body : MonoBehaviour
 
     public void SetBrain(Brain brain)
     {
+        Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
+
         _hasBrain = true;   
         _brain = brain;
         _brain.transform.parent = _brainPlaceholderPosition;
