@@ -91,5 +91,10 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    public Vector3 GetPosition()
+    {
+        return _body ? _body.transform.position : _brain.transform.position;
+    }
 }
 

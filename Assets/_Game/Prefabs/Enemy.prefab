@@ -45,6 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brain: {fileID: 727080193314844018}
+  lineOfSightLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  maxLineOfSightDistance: 20
 --- !u!1001 &545717906039876195
 PrefabInstance:
   m_ObjectHideFlags: 0

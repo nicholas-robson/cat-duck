@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
     public Brain brain;
+    public LayerMask lineOfSightLayerMask;
+    public float maxLineOfSightDistance;
 
     private List<Body> _targetBodies;
     private Body _nearestBody;
@@ -19,30 +22,40 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (_hasBody)
+        if (HasBody())
         {
-            var position = brain.transform.position;
-            var direction = GameManager.player.transform.position - position;
-            var distance = 20f;
-            if (Physics.Raycast(position, direction, out var hit, distance))
+            var playerPosition = GameManager.player.GetPosition();
+            var position = _body.transform.position;
+            
+            var playerPositionDiff = playerPosition - position;
+            var playerDirection = playerPositionDiff.normalized;
+            var playerDistance = playerPositionDiff.magnitude;
+            if (playerDistance > 20f)
             {
-                Debug.DrawLine(position, hit.point, Color.green);
-                var player = hit.collider.GetComponentInParent<Player>();
-                if (player)
+                return;
+            }
+
+            if (Physics.Raycast(position, playerDirection, out var hit, maxLineOfSightDistance, lineOfSightLayerMask))
+            {
+                Debug.DrawLine(position, hit.point, Color.red);
+
+                if (hit.distance < playerDistance)
                 {
-                    if (hit.distance <= _body.minAttackDistance)
-                    {
-                        _body.Attack(direction.normalized);
-                    }
-                    else
-                    {
-                        _body.Move(direction.normalized);
-                    }
+                    return;
                 }
+            }
+            
+            Debug.DrawLine(position, playerPosition, Color.green);
+
+            var newDirection = new Vector3(playerDirection.x, 0f, playerDirection.z);
+            newDirection = newDirection.normalized;
+            if (playerDistance <= _body.minAttackDistance)
+            {
+                _body.Attack(newDirection);
             }
             else
             {
-                Debug.DrawLine(position, direction * distance, Color.red);
+                _body.Move(newDirection);
             }
         }
         else
@@ -73,8 +86,10 @@ public class EnemyAI : MonoBehaviour
 
     public void SetBody(Body body)
     {
+        if (body.HasBrain()) return;
         _hasBody = true;
         _body = body;
+        body.SetBrain(brain);
     }
 
     public void EjectBody()
@@ -103,5 +118,21 @@ public class EnemyAI : MonoBehaviour
         });
         
         _nearestBody = bodyGameObjects[0];
+    }
+    
+    public void OnCollectableEnter(Collider other)
+    {
+        if (!_hasBody)
+        {
+            var body = other.GetComponentInParent<Body>();
+            if (body != null)
+            {
+                SetBody(body);
+            }
+        }
+    }
+
+    public void OnCollectableExit(Collider other)
+    {
     }
 }

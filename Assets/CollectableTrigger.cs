@@ -1,30 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectableTrigger : MonoBehaviour
 {
-    Player _player;
+    private Player _player;
+    private EnemyAI _enemy;
 
     private void Awake()
     {
         _player = GetComponentInParent<Player>();
-
+        _enemy = GetComponentInParent<EnemyAI>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_player) return; 
-        
-        _player.OnCollectableEnter(other);
-
+        if (_player) _player.OnCollectableEnter(other);
+        if (_enemy) _enemy.OnCollectableEnter(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!_player) return;
-
-        _player.OnCollectableExit(other);
+        if (_player) _player.OnCollectableExit(other);
+        if (_enemy) _enemy.OnCollectableExit(other);
     }
 
 }
