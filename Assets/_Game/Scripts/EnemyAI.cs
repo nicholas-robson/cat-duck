@@ -27,16 +27,21 @@ public class EnemyAI : MonoBehaviour
     {
         if (body)
         {
-            
-            
+            var position = _transform.position;
+            var direction = GameManager.player.transform.position - position;
+            if (Physics.Raycast(position, GameManager.player.transform.position - position, out var hit, 20f))
+            {
+                var player = hit.collider.GetComponentInParent<Player>();
+                if (player)
+                {
+                    body.Move(direction.normalized);
+                }
+            }
         }
         else
         {
-            var position = _transform.position;
-            if (Physics.Raycast(position, GameManager.player.transform.position - position, out var hit, 20f))
-            {
-
-            }
+            // TODO: Direction to nearest body.
+            //brain.Move();
         }
     }
     
