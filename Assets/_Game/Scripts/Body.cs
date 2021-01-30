@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Body : Wearable
+public class Body : MonoBehaviour
 {
-    Transform _triggerObj;
-    Transform _transform;
+    private Transform _triggerObj;
+    private Transform _transform;
+    private Moveable _movable;
 
-    void Awake()
+    private void Awake()
     {
         _transform = transform;
         _triggerObj = _transform.Find("PlayerTrigger");
 
+        _movable = GetComponent<Moveable>();
 
+    }
+    
+    public void Attack(Vector3 direction)
+    {
+        
+    }
+    
+    public void Move(Vector3 direction)
+    {
+        _movable.Move(direction);
     }
 
 }

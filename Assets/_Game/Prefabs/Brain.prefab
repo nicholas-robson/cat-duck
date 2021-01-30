@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 974426916688971537}
   - component: {fileID: 3671074967194149808}
   - component: {fileID: 5058239895990213486}
+  - component: {fileID: 6958236332431868539}
   m_Layer: 10
   m_Name: Brain
   m_TagString: Untagged
@@ -122,8 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688df5cd5d6004a6aa8cb378db904c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundCooldown: 0.5
-  forwardForce: 0.5
 --- !u!82 &3671074967194149808
 AudioSource:
   m_ObjectHideFlags: 0
@@ -233,6 +232,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9126291, y: 1.2607517, z: 1.4418296}
   m_Center: {x: 0.014485836, y: 0.0072431564, z: 0.032593906}
+--- !u!114 &6958236332431868539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3111814936838196906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d7c28dde51e42819254f574b202315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardForce: 0.5
+  nextTimeToPlaySound: 2
+  soundCooldown: 2
 --- !u!1 &6276316649415504304
 GameObject:
   m_ObjectHideFlags: 0
