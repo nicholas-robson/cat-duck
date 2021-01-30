@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public GameObject playerObject;
 
     Vector3 inputDirection;
-    float nextTimeToJump;
+    float nextTimeToPlaySound;
 
     protected AudioSource audioSource;
 
@@ -92,14 +92,14 @@ public class Player : MonoBehaviour
         if (!grounded)
             return;
 
-        if (inputDirection.x != 0 || inputDirection.y != 0)
+        if (inputDirection.x != 0 || inputDirection.z != 0)
         {
-            if (Time.time >= nextTimeToJump)
+            if (Time.time >= nextTimeToPlaySound)
                 audioSource.PlayOneShot(audioSource.clip, 1.0f);
 
-            Vector3 forwardForce = -inputDirection * currentStats.forwardForce;
-            _rb.AddForce(forwardForce, ForceMode.VelocityChange);
-            nextTimeToJump = Time.time + currentStats.jumpCooldown;
+            Vector3 force = inputDirection * currentStats.forwardForce;
+            _rb.AddForce(force, ForceMode.VelocityChange);
+            nextTimeToPlaySound = Time.time + currentStats.soundCooldown;
 
         }
     }

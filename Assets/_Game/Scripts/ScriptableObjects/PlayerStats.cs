@@ -16,10 +16,8 @@ public class BodyStats
 {
     [SerializeField] string name;
     public BodyState bodyState;
-    public float jumpForce;
     public float forwardForce;
-    public float jumpCooldown;
-    public float rotationSpeed;
+    public float soundCooldown;
    
 }
 
