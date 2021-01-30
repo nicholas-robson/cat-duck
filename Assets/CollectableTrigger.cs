@@ -14,6 +14,8 @@ public class CollectableTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!_player) return; 
+        
         _player.OnCollectableEnter(other);
 
     }
