@@ -18,19 +18,7 @@ MonoBehaviour:
     bodyState: 0
     forwardForce: 0.5
     soundCooldown: 0.3
-  - name: Head
-    bodyState: 1
-    forwardForce: 0
-    soundCooldown: 0
-  - name: Torso
-    bodyState: 2
-    forwardForce: 0
-    soundCooldown: 0
-  - name: Arms
-    bodyState: 3
-    forwardForce: 0
-    soundCooldown: 0
-  - name: Legs
-    bodyState: 4
-    forwardForce: 0
-    soundCooldown: 0
+  - name: Brain
+    bodyState: 0
+    forwardForce: 0.5
+    soundCooldown: 0.3

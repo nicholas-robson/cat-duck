@@ -178,11 +178,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3568721771997653235, guid: a46952ee17a137f47937153e90b1e25f, type: 3}
-      propertyPath: _camera
-      value: 
-      objectReference: {fileID: 1478577901}
-    m_RemovedComponents: []
+    - target: {fileID: 8008520121669046831, guid: a46952ee17a137f47937153e90b1e25f, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 803954251, guid: a46952ee17a137f47937153e90b1e25f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a46952ee17a137f47937153e90b1e25f, type: 3}
 --- !u!1 &839541257
 GameObject:
@@ -412,11 +413,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!20 &1478577901 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 1927905205710592049, guid: a46952ee17a137f47937153e90b1e25f, type: 3}
-  m_PrefabInstance: {fileID: 385325141}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1720812899
 GameObject:
   m_ObjectHideFlags: 0

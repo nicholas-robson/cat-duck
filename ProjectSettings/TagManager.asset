@@ -14,9 +14,9 @@ TagManager:
   - Walkable
   - GroundTrigger
   - Enemy
-  - Interactable
+  - InteractableTrigger
   - Player
-  - 
+  - Interactable
   - 
   - 
   - 
