@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class Moveable: MonoBehaviour
     public float forwardForce;
     public float nextTimeToPlaySound;
     public float soundCooldown;
+    public float maxVelocity;
     
     private bool _grounded = false;
     private AudioSource _audioSource;
@@ -35,6 +37,15 @@ public class Moveable: MonoBehaviour
         _grounded = false;
     }
 
+    private void FixedUpdate()
+    {
+        var velocityMagnitude = _rb.velocity.magnitude;
+        if (velocityMagnitude > maxVelocity)
+        {
+            _rb.AddForce(_rb.velocity.normalized * (-1 * (velocityMagnitude - maxVelocity)), ForceMode.VelocityChange);
+        }
+    }
+
     public bool IsGrounded()
     {
         return _grounded;
@@ -42,13 +53,7 @@ public class Moveable: MonoBehaviour
     
     public void Move(Vector3 direction)
     {
-        Debug.DrawLine(transform.position, transform.position + direction * 5f, Color.blue);
-
-        if (Time.time >= nextTimeToPlaySound)
-        {
-            _audioSource.PlayOneShot(_audioSource.clip, 1.0f);
-            nextTimeToPlaySound = Time.time + soundCooldown;
-        }
+        Debug.DrawLine(transform.position + Vector3.up * 0.05f, (transform.position + direction * 5f) + Vector3.up * 0.05f, Color.blue);
 
         // if (!grounded)
         //     return;
