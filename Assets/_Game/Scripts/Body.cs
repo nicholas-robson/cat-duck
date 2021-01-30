@@ -54,7 +54,7 @@ public class Body : MonoBehaviour
         StartCoroutine(DisableCollectableColliderForTime(1));
 
         _brain.transform.parent = parent;
-        _brain.transform.localScale = Vector3.one;
+        _brain.transform.localScale = Vector3.one * 0.5f;
         Rigidbody rb = _brain.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.detectCollisions = true;

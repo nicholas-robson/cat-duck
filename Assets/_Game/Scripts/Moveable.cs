@@ -70,9 +70,9 @@ public class Moveable: MonoBehaviour
         _rb.AddForce(force, ForceMode.VelocityChange);
 
 
-        float angle = Vector3.SignedAngle(direction, _rb.transform.forward, Vector3.up);
-        if (angle >= 10 || angle <= -10)
-            _rb.AddTorque(_rb.transform.up * angle * 0.5f, ForceMode.VelocityChange);
+        // float angle = Vector3.SignedAngle(direction, _rb.transform.forward, Vector3.up);
+        // if (angle >= 10 || angle <= -10)
+        //     _rb.AddTorque(_rb.transform.up * angle * 0.5f, ForceMode.VelocityChange);
 
 
 
