@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     Transform _transform;
     Rigidbody _rb;
     Transform _triggerObj;
+    private CinemachineImpulseSource _impulse;
     public GameObject playerObject;
 
     Vector3 inputDirection;
@@ -39,7 +41,7 @@ public class Player : MonoBehaviour
         _rb = playerObject.GetComponent<Rigidbody>();
         _triggerObj = _transform.Find("PlayerTrigger");
         audioSource = GetComponent<AudioSource>();
-
+        _impulse = GetComponent<CinemachineImpulseSource>();
     }
 
 
@@ -66,6 +68,11 @@ public class Player : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if (!grounded)
+        {
+            // Landed.
+            _impulse.GenerateImpulse();
+        }
         grounded = true;
     }
 
