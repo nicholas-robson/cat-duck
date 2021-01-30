@@ -73,13 +73,12 @@ public class Moveable: MonoBehaviour
         Vector3 force = direction * forwardForce;
         _rb.AddForce(force, ForceMode.VelocityChange);
 
-
+        
         float angle = Vector3.SignedAngle(direction, _rb.transform.forward, Vector3.up);
         if (Time.time >= nextTimeToTurn)
         {
             _rb.AddTorque(_rb.transform.up * angle * 0.2f, ForceMode.VelocityChange);
             nextTimeToTurn = Time.time + turnCooldown;
-
         }
 
 
