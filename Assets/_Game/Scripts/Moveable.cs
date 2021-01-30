@@ -8,15 +8,18 @@ public class Moveable: MonoBehaviour
     public float soundCooldown;
     
     private bool _grounded = false;
-    private AudioSource _audioSource;
     private CinemachineImpulseSource _impulse;
     private Rigidbody _rb;
+    [SerializeField]
+    private Transform _centerOfMass;
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
         _impulse = GetComponent<CinemachineImpulseSource>();
         _rb = GetComponent<Rigidbody>();
+        if (_centerOfMass)
+            _rb.centerOfMass = _centerOfMass.transform.localPosition;
+     
     }
     
     public void OnGroundedTriggerEnter(Collider other)
@@ -39,7 +42,15 @@ public class Moveable: MonoBehaviour
     {
         return _grounded;
     }
-    
+
+    public void TryToGetYourselfUpBoy()
+    {
+        float uprightStrength = 50.0f;
+        Vector3 upDirection = Vector3.up * uprightStrength;
+        _rb.AddForceAtPosition(upDirection, _rb.transform.TransformPoint(Vector3.up));
+        _rb.AddForceAtPosition(-upDirection, _rb.transform.TransformPoint(-Vector3.up));
+    }
+
     public void Move(Vector3 direction)
     {
         Debug.DrawLine(transform.position, transform.position + direction * 5f, Color.blue);
@@ -50,6 +61,15 @@ public class Moveable: MonoBehaviour
 
         Vector3 force = direction * forwardForce;
         _rb.AddForce(force, ForceMode.VelocityChange);
-        
+
+
+        float angle = Vector3.SignedAngle(direction, _rb.transform.forward, Vector3.up);
+        if (angle >= 10 || angle <= -10)
+            _rb.AddTorque(_rb.transform.up * angle * 0.5f, ForceMode.VelocityChange);
+
+
+
+
+
     }
 }
