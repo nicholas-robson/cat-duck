@@ -14,35 +14,51 @@ public class Player : MonoBehaviour
 
     bool grounded = false;
 
-    [SerializeField] float brainForce, headForce, torsoForce, armsForce, legsForce;
+    [SerializeField] float jumpCooldown;
+    [SerializeField] float brainForce;
+    [SerializeField] float brainJumpForce;
+
+    [SerializeField] float headForce;
+    [SerializeField] float torsoForce;
+    [SerializeField] float armsForce;
+    [SerializeField] float legsForce;
+    [SerializeField] float rotationSpeed;
 
     Transform _transform;
     Rigidbody _rb;
     Transform _triggerObj;
-
     public GameObject playerObject;
+
+    Vector2 inputDirection;
+    float nextTimeToJump;
 
     private void Awake()
     {
         _transform = transform;
         _rb = playerObject.GetComponent<Rigidbody>();
-        //_triggerObj = _transform.Find("PlayerTrigger");
+        _triggerObj = _transform.Find("PlayerTrigger");
     }
 
 
     void Update()
     {
-        HandleHotkeys();
+        HandleInputs();
 
-        
+
     }
 
     private void FixedUpdate()
     {
-        //_transform.position = playerObject.transform.position;
-        _triggerObj.position = playerObject.transform.position;
+        Vector3 rotAxis = Vector3.up * rotationSpeed;
+        Quaternion deltaRotation = Quaternion.Euler(inputDirection.x * rotAxis * Time.fixedDeltaTime);
+        _rb.MoveRotation(_rb.rotation * deltaRotation);
 
-    }
+        HandleMovement();
+            
+
+        _triggerObj.position = playerObject.transform.position;
+        _triggerObj.rotation = playerObject.transform.rotation;
+    } 
 
     public void OnTriggerEnter(Collider other)
     {
@@ -54,15 +70,24 @@ public class Player : MonoBehaviour
         grounded = false;
     }
 
-    void HandleHotkeys()
+    void HandleInputs()
+    {
+        inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+
+    }
+
+    void HandleMovement()
     {
         if (!grounded)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Time.time >= nextTimeToJump)
         {
-            _rb.AddForce(Vector3.up * brainForce, ForceMode.Acceleration);
-        }
+            Vector3 forwardForce = _rb.transform.forward * inputDirection.y * brainJumpForce;
+            Vector3 jumpForce = Vector3.up * brainForce;
+            _rb.AddForce((forwardForce + jumpForce) * Mathf.Abs(inputDirection.y), ForceMode.Impulse);
 
+            nextTimeToJump = Time.time + jumpCooldown;
+        }
     }
 }
