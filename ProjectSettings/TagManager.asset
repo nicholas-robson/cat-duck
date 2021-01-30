@@ -13,13 +13,13 @@ TagManager:
   - UI
   - Walkable
   - GroundTrigger
-  - Enemy
+  - Object
   - InteractableTrigger
-  - Player
+  - 
   - Interactable
   - Collectable
   - CollectableTrigger
-  - 
+  - PressurePlateTrigger
   - 
   - 
   - 

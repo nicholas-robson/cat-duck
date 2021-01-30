@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 974426916688971537}
   - component: {fileID: 5058239895990213486}
   - component: {fileID: 6958236332431868539}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Brain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 8601596200305239095}
   - component: {fileID: 8528689546418541416}
   - component: {fileID: 4100586083600703345}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
