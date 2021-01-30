@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4664408931910310370}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BrainPlaceholderPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
