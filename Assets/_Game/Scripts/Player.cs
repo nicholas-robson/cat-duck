@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     public void SetBody(Body body)
     {
+        if (body.HasBrain()) return;
+        
         _body = body;
         // TODO make more efficient? Don't overengineer tho
         _body.transform.parent = transform;

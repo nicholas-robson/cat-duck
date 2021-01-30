@@ -204,10 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d7c28dde51e42819254f574b202315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 100
+  forwardForce: 1
   nextTimeToPlaySound: 2
   soundCooldown: 2
-  _centerOfMass: {fileID: 0}
+  maxVelocity: 15
 --- !u!1 &6276316649415504304
 GameObject:
   m_ObjectHideFlags: 0
