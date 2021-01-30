@@ -28,6 +28,6 @@ public class BrainAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Physics.Raycast(_transform.position, GameManager.player);
+        //Physics.Raycast(_transform.position, GameManager.player);
     }
 }

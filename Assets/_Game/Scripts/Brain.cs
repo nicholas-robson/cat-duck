@@ -52,6 +52,7 @@ public class Brain : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
+        Debug.DrawLine(transform.position, transform.position + direction, Color.blue);
 
         if (Time.time >= nextTimeToPlaySound)
         {
