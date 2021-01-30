@@ -17,6 +17,9 @@ public class Body : MonoBehaviour
     private Transform _centerOfMass;
 
     AudioSource _audioSource;
+    [SerializeField] GameObject SetBrainParticles;
+
+
     SphereCollider _collectableCollider;
 
     private void Awake()
@@ -32,6 +35,8 @@ public class Body : MonoBehaviour
 
     public void SetBrain(Brain brain)
     {
+        Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
+
         _hasBrain = true;   
         _brain = brain;
         _brain.transform.parent = _brainPlaceholderPosition;
@@ -54,7 +59,7 @@ public class Body : MonoBehaviour
         StartCoroutine(DisableCollectableColliderForTime(1));
 
         _brain.transform.parent = parent;
-        _brain.transform.localScale = Vector3.one;
+        _brain.transform.localScale = Vector3.one * 0.5f;
         Rigidbody rb = _brain.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.detectCollisions = true;
