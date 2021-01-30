@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public enum BodyState {
-        Brain,
-        Head,
-        Torso,
-        Arms,
-        Legs
-    }
+
 
     bool grounded = false;
 
-    [SerializeField] float jumpCooldown;
-    [SerializeField] float brainForce;
-    [SerializeField] float brainJumpForce;
+    //[SerializeField] float jumpCooldown;
+    //[SerializeField] float brainForce;
+    //[SerializeField] float brainJumpForce;
 
-    [SerializeField] float headForce;
-    [SerializeField] float torsoForce;
-    [SerializeField] float armsForce;
-    [SerializeField] float legsForce;
-    [SerializeField] float rotationSpeed;
+    //[SerializeField] float headForce;
+    //[SerializeField] float torsoForce;
+    //[SerializeField] float armsForce;
+    //[SerializeField] float legsForce;
+    //[SerializeField] float rotationSpeed;
+
+    [SerializeField] PlayerStats stats;
+    BodyStats currentStats;
+
 
     Transform _transform;
     Rigidbody _rb;
@@ -32,11 +30,16 @@ public class Player : MonoBehaviour
     Vector2 inputDirection;
     float nextTimeToJump;
 
+    protected AudioSource audioSource;
+
+
     private void Awake()
     {
         _transform = transform;
         _rb = playerObject.GetComponent<Rigidbody>();
         _triggerObj = _transform.Find("PlayerTrigger");
+        audioSource = GetComponent<AudioSource>();
+
     }
 
 
@@ -49,7 +52,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 rotAxis = Vector3.up * rotationSpeed;
+        currentStats = stats.GetCurrentStats();
+        Vector3 rotAxis = Vector3.up * currentStats.rotationSpeed;
         Quaternion deltaRotation = Quaternion.Euler(inputDirection.x * rotAxis * Time.fixedDeltaTime);
         _rb.MoveRotation(_rb.rotation * deltaRotation);
 
@@ -81,13 +85,14 @@ public class Player : MonoBehaviour
         if (!grounded)
             return;
 
-        if (Time.time >= nextTimeToJump)
+        if (Time.time >= nextTimeToJump && Mathf.Abs(inputDirection.y) > 0)
         {
-            Vector3 forwardForce = _rb.transform.forward * inputDirection.y * brainJumpForce;
-            Vector3 jumpForce = Vector3.up * brainForce;
-            _rb.AddForce((forwardForce + jumpForce) * Mathf.Abs(inputDirection.y), ForceMode.Impulse);
+            audioSource.PlayOneShot(audioSource.clip, 1.0f);
+            Vector3 forwardForce = _rb.transform.forward * inputDirection.y * currentStats.jumpForce;
+            Vector3 jumpForce = Vector3.up * currentStats.forwardForce;
+            _rb.AddForce(forwardForce + jumpForce, ForceMode.Impulse);
 
-            nextTimeToJump = Time.time + jumpCooldown;
+            nextTimeToJump = Time.time + currentStats.jumpCooldown;
         }
     }
 }
