@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Body : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class Body : MonoBehaviour
     private Transform _transform;
     private Moveable _movable;
     [SerializeField] Transform _brainPlaceholderPosition;
+    [SerializeField] GameObject collectableColliderObj;
+
     AudioSource _audioSource;
+    SphereCollider _collectableCollider;
 
     private void Awake()
     {
@@ -18,6 +22,7 @@ public class Body : MonoBehaviour
         //_triggerObj = _transform.Find("PlayerTrigger");
         _movable = GetComponent<Moveable>();
         _audioSource = GetComponent<AudioSource>();
+        _collectableCollider = collectableColliderObj.GetComponent<SphereCollider>();
     }
 
     public void SetBrain(Brain brain)
@@ -36,10 +41,21 @@ public class Body : MonoBehaviour
 
     }
 
-    public void EjectBrain()
+    public void EjectBrain(Transform parent)
     {
+        StartCoroutine(DisableCollectableColliderForTime(1));
+        _brain.transform.parent = parent;
+        _brain.transform.localScale = Vector3.one;
+        Rigidbody rb = _brain.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        Vector3 upAngle = new Vector3(Random.Range(-5f, 5f), 1f, Random.Range(-5f, 5f));
+        rb.AddForce(upAngle * 10, ForceMode.Impulse);
+        rb.detectCollisions = true;
+
         _hasBrain = false;
         _brain = null;
+
+     
     }
     
     public bool HasBrain()
@@ -55,6 +71,13 @@ public class Body : MonoBehaviour
     public void Move(Vector3 direction)
     {
         _movable.Move(direction);
+    }
+
+    IEnumerator DisableCollectableColliderForTime(float time)
+    {
+        _collectableCollider.enabled = false;
+        yield return new WaitForSeconds(time);
+        _collectableCollider.enabled = true;
     }
 
 }

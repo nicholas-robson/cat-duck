@@ -6,9 +6,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    [SerializeField] PlayerStats stats;
-    BodyStats currentStats;
-
     [SerializeField] Camera _camera;
 
 
@@ -17,7 +14,7 @@ public class Player : MonoBehaviour
 
     Vector3 inputDirection;
 
-
+    Collider collectable = null;
 
     void Update()
     {
@@ -27,14 +24,18 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentStats = stats.GetCurrentStats();
 
         HandleMovement();
     }
 
     public void OnCollectableEnter(Collider other)
     {
-        SetBody(other.GetComponentInParent<Body>());
+        collectable = other;
+    }
+
+    public void OnCollectableExit(Collider other)
+    {
+        collectable = null;
     }
 
     public void SetBody(Body body)
@@ -49,6 +50,17 @@ public class Player : MonoBehaviour
     void HandleInputs()
     {
         inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+
+        if (Input.GetKeyDown(KeyCode.E) && _body)
+        {
+            _body.EjectBrain(transform);
+            _body.transform.parent = null;
+            _body = null;
+        } else if (Input.GetKeyDown(KeyCode.E) && collectable)
+        {
+            SetBody(collectable.GetComponentInParent<Body>());
+
+        }
 
     }
 
@@ -69,6 +81,7 @@ public class Player : MonoBehaviour
             Vector3 direction = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
             if (_body)
             {
+                _body.Move(direction);
 
             } else
             {
