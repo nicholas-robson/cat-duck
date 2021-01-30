@@ -31,11 +31,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126993900858922516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.448679, y: 0.24830437, z: -0.84797}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1808123964750331498}
   - {fileID: 4664408931910310370}
+  - {fileID: 9094424204015156306}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -54,6 +55,8 @@ MonoBehaviour:
   minAttackDistance: 2
   _brainPlaceholderPosition: {fileID: 4664408931910310370}
   collectableColliderObj: {fileID: 4363773141403037987}
+  yeet: 10
+  _centerOfMass: {fileID: 9094424204015156306}
 --- !u!33 &1995852686242875250
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -240,10 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d7c28dde51e42819254f574b202315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 2
+  forwardForce: 20
   nextTimeToPlaySound: 0
   soundCooldown: 0
-  maxVelocity: 15
 --- !u!1 &4363773141403037987
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +290,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8097169134081065349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9094424204015156306}
+  m_Layer: 8
+  m_Name: CenterOfMass
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9094424204015156306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097169134081065349}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1643612663674965166}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8535254284121539155
 GameObject:
   m_ObjectHideFlags: 0
