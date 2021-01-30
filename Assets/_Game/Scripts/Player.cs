@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] PlayerStats stats;
     BodyStats currentStats;
 
+    [SerializeField] Camera _camera;
 
     Transform _transform;
     Rigidbody _rb;
@@ -97,7 +98,16 @@ public class Player : MonoBehaviour
             if (Time.time >= nextTimeToPlaySound)
                 audioSource.PlayOneShot(audioSource.clip, 1.0f);
 
-            Vector3 force = inputDirection * currentStats.forwardForce;
+            Vector3 cameraForward = _camera.transform.forward;
+            cameraForward.y = 0f;
+            Vector3 cameraRight = _camera.transform.right;
+            cameraRight.y = 0f;
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            Vector3 direction = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
+
+            Vector3 force = direction * currentStats.forwardForce;
             _rb.AddForce(force, ForceMode.VelocityChange);
             nextTimeToPlaySound = Time.time + currentStats.soundCooldown;
 
