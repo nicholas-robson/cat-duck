@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 2874cb68cd0214257adb918608e92623, type: 2}
+  _camera: {fileID: 0}
   playerObject: {fileID: 7800116932862272117}
 --- !u!82 &1427663387
 AudioSource:
@@ -214,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 4985254134618161611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_Children: []
   m_Father: {fileID: 6012100051106477255}
   m_RootOrder: 1

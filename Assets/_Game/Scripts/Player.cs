@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] PlayerStats stats;
     BodyStats currentStats;
 
+    [SerializeField] Camera _camera;
 
     Transform _transform;
     Rigidbody _rb;
@@ -89,17 +90,31 @@ public class Player : MonoBehaviour
 
     void HandleMovement()
     {
-        if (!grounded)
-            return;
+
 
         if (inputDirection.x != 0 || inputDirection.z != 0)
         {
             if (Time.time >= nextTimeToPlaySound)
+            {
                 audioSource.PlayOneShot(audioSource.clip, 1.0f);
+                nextTimeToPlaySound = Time.time + currentStats.soundCooldown;
+            }
 
-            Vector3 force = inputDirection * currentStats.forwardForce;
+            if (!grounded)
+                return;
+
+            Vector3 cameraForward = _camera.transform.forward;
+            cameraForward.y = 0f;
+            Vector3 cameraRight = _camera.transform.right;
+            cameraRight.y = 0f;
+            cameraForward.Normalize();
+            cameraRight.Normalize();
+
+            Vector3 direction = cameraForward * inputDirection.z + cameraRight * inputDirection.x;
+            Debug.Log(direction);
+
+            Vector3 force = direction * currentStats.forwardForce;
             _rb.AddForce(force, ForceMode.VelocityChange);
-            nextTimeToPlaySound = Time.time + currentStats.soundCooldown;
 
         }
     }
