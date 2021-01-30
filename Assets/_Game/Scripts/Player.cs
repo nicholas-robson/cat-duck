@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] Camera _camera;
 
+    [SerializeField]
+    GameEvent OnAbleToPickUp;
 
     public Brain _brain;
     public Body _body;
