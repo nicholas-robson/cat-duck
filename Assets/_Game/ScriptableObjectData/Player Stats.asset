@@ -16,31 +16,9 @@ MonoBehaviour:
   statsList:
   - name: Brain
     bodyState: 0
-    jumpForce: 5
-    forwardForce: 10
-    jumpCooldown: 0.5
-    rotationSpeed: 200
-  - name: Head
-    bodyState: 1
-    jumpForce: 0
-    forwardForce: 0
-    jumpCooldown: 0
-    rotationSpeed: 0
-  - name: Torso
-    bodyState: 2
-    jumpForce: 0
-    forwardForce: 0
-    jumpCooldown: 0
-    rotationSpeed: 0
-  - name: Arms
-    bodyState: 3
-    jumpForce: 0
-    forwardForce: 0
-    jumpCooldown: 0
-    rotationSpeed: 0
-  - name: Legs
-    bodyState: 4
-    jumpForce: 0
-    forwardForce: 0
-    jumpCooldown: 0
-    rotationSpeed: 0
+    forwardForce: 0.5
+    soundCooldown: 0.3
+  - name: Brain
+    bodyState: 0
+    forwardForce: 0.5
+    soundCooldown: 0.3

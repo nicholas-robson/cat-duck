@@ -5,10 +5,7 @@ using UnityEngine;
 public enum BodyState
 {
     Brain,
-    Head,
-    Torso,
-    Arms,
-    Legs
+    Body
 }
 
 [System.Serializable]
