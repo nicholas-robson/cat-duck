@@ -3,19 +3,13 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public LayerMask playerLayerMask;
-    
-    public LayerMask bodyLayerMask;
-    
-    public string bodyTag;
-
     public Brain brain;
-    
-    public Body body;
 
     private List<Body> _targetBodies;
-    
+    private Body _nearestBody;
     private Transform _transform;
+    private Body _body;
+    private bool _hasBody;
 
     private void Awake()
     {
@@ -23,32 +17,91 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        if (body)
+        if (_hasBody)
         {
-            var position = _transform.position;
+            var position = brain.transform.position;
             var direction = GameManager.player.transform.position - position;
-            if (Physics.Raycast(position, GameManager.player.transform.position - position, out var hit, 20f))
+            var distance = 20f;
+            if (Physics.Raycast(position, direction, out var hit, distance))
             {
+                Debug.DrawLine(position, hit.point, Color.green);
                 var player = hit.collider.GetComponentInParent<Player>();
                 if (player)
                 {
-                    body.Move(direction.normalized);
+                    if (hit.distance <= _body.minAttackDistance)
+                    {
+                        _body.Attack(direction.normalized);
+                    }
+                    else
+                    {
+                        _body.Move(direction.normalized);
+                    }
                 }
+            }
+            else
+            {
+                Debug.DrawLine(position, direction * distance, Color.red);
             }
         }
         else
         {
+            GetNearestBody();
+            
+            if (_nearestBody != null)
+            {
+                var diff = _nearestBody.transform.position - brain.transform.position;
+                diff.y = 0;
+                brain.Move(diff.normalized);
+            }
+
             // TODO: Direction to nearest body.
             //brain.Move();
         }
     }
-    
-    public void OnEject()
+
+    public Body GetBody()
     {
-        var bodyGameObjects = GameObject.FindGameObjectsWithTag("Body");
+        return _body;
+    }
+
+    public bool HasBody()
+    {
+        return _hasBody;
+    }
+
+    public void SetBody(Body body)
+    {
+        _hasBody = true;
+        _body = body;
+    }
+
+    public void EjectBody()
+    {
+        _hasBody = false;
+    }
+
+    private void GetNearestBody()
+    {
+        var bodyGameObjects = new List<Body>(FindObjectsOfType<Body>()).FindAll(body => !body.HasBrain());
         
-        _targetBodies = new List<Body>();
+        if (bodyGameObjects.Count == 0)
+        {
+            _nearestBody = null;
+            return;
+        }
+        
+        // Sort by distance.
+        bodyGameObjects.Sort((a, b) =>
+        {
+            var brainPosition = brain.transform.position;
+            return Vector3.Distance(brainPosition, a.transform.position)
+                .CompareTo(
+                    Vector3.Distance(brainPosition, b.transform.position)
+                );
+        });
+        
+        _nearestBody = bodyGameObjects[0];
     }
 }

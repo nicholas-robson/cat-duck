@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
         if (inputDirection.x != 0 || inputDirection.z != 0)
         {
 
-
             Vector3 cameraForward = _camera.transform.forward;
             cameraForward.y = 0f;
             Vector3 cameraRight = _camera.transform.right;

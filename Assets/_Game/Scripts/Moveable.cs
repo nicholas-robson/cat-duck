@@ -44,12 +44,6 @@ public class Moveable: MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + direction * 5f, Color.blue);
 
-        if (Time.time >= nextTimeToPlaySound)
-        {
-            _audioSource.PlayOneShot(_audioSource.clip, 1.0f);
-            nextTimeToPlaySound = Time.time + soundCooldown;
-        }
-
         // if (!grounded)
         //     return;
 
