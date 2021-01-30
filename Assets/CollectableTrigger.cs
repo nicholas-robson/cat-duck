@@ -20,4 +20,11 @@ public class CollectableTrigger : MonoBehaviour
 
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (!_player) return;
+
+        _player.OnCollectableExit(other);
+    }
+
 }
