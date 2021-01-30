@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleInputs();
+        if (collectable)
+            SetTooltipToPosition(collectable);
 
     }
 
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
     {
         collectable = other;
         SetTooltipToPosition(other);
+        tooltipText.gameObject.SetActive(true);
     }
 
     public void OnCollectableExit(Collider other)
@@ -44,7 +47,6 @@ public class Player : MonoBehaviour
 
     void SetTooltipToPosition(Collider other)
     {
-        Debug.Log("This!");
         float offsetY = other.transform.position.y;
         float offsetX = other.transform.position.x + 1.5f;
 
@@ -54,7 +56,6 @@ public class Player : MonoBehaviour
         Vector2 screenPoint = _camera.WorldToScreenPoint(offsetPos);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
 
-        tooltipText.gameObject.SetActive(true);
         tooltipText.transform.localPosition = canvasPos;
 
     }
