@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     Transform _triggerObj;
     public GameObject playerObject;
 
-    Vector2 inputDirection;
+    Vector3 inputDirection;
     float nextTimeToJump;
 
     protected AudioSource audioSource;
@@ -53,9 +53,9 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         currentStats = stats.GetCurrentStats();
-        Vector3 rotAxis = Vector3.up * currentStats.rotationSpeed;
-        Quaternion deltaRotation = Quaternion.Euler(inputDirection.x * rotAxis * Time.fixedDeltaTime);
-        _rb.MoveRotation(_rb.rotation * deltaRotation);
+        //Vector3 rotAxis = Vector3.up * currentStats.rotationSpeed;
+        //Quaternion deltaRotation = Quaternion.Euler(inputDirection.x * rotAxis * Time.fixedDeltaTime);
+        //_rb.MoveRotation(_rb.rotation * deltaRotation);
 
         HandleMovement();
             
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
 
     void HandleInputs()
     {
-        inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+        inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
 
     }
 
@@ -85,14 +85,15 @@ public class Player : MonoBehaviour
         if (!grounded)
             return;
 
-        if (Time.time >= nextTimeToJump && Mathf.Abs(inputDirection.y) > 0)
+        if (inputDirection.x != 0 || inputDirection.y != 0)
         {
-            audioSource.PlayOneShot(audioSource.clip, 1.0f);
-            Vector3 forwardForce = _rb.transform.forward * inputDirection.y * currentStats.jumpForce;
-            Vector3 jumpForce = Vector3.up * currentStats.forwardForce;
-            _rb.AddForce(forwardForce + jumpForce, ForceMode.Impulse);
+            if (Time.time >= nextTimeToJump)
+                audioSource.PlayOneShot(audioSource.clip, 1.0f);
 
+            Vector3 forwardForce = -inputDirection * currentStats.forwardForce;
+            _rb.AddForce(forwardForce, ForceMode.VelocityChange);
             nextTimeToJump = Time.time + currentStats.jumpCooldown;
+
         }
     }
 }
