@@ -55,6 +55,8 @@ MonoBehaviour:
   minAttackDistance: 2
   _brainPlaceholderPosition: {fileID: 4664408931910310370}
   collectableColliderObj: {fileID: 4363773141403037987}
+  yeet: 10
+  _centerOfMass: {fileID: 9094424204015156306}
 --- !u!33 &1995852686242875250
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -244,7 +246,6 @@ MonoBehaviour:
   forwardForce: 20
   nextTimeToPlaySound: 0
   soundCooldown: 0
-  _centerOfMass: {fileID: 9094424204015156306}
 --- !u!1 &4363773141403037987
 GameObject:
   m_ObjectHideFlags: 0

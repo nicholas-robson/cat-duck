@@ -10,16 +10,12 @@ public class Moveable: MonoBehaviour
     private bool _grounded = false;
     private CinemachineImpulseSource _impulse;
     private Rigidbody _rb;
-    [SerializeField]
-    private Transform _centerOfMass;
 
     private void Awake()
     {
         _impulse = GetComponent<CinemachineImpulseSource>();
         _rb = GetComponent<Rigidbody>();
-        if (_centerOfMass)
-            _rb.centerOfMass = _centerOfMass.transform.localPosition;
-     
+
     }
     
     public void OnGroundedTriggerEnter(Collider other)
