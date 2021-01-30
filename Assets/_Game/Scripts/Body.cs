@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Body : MonoBehaviour
 {
+    public float minAttackDistance = 2f;
+    
     private bool _hasBrain;
     private Brain _brain;
     private Transform _triggerObj;
