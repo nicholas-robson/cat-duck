@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Analytics;
-
 public class EnemyAI : MonoBehaviour
 {
     public Brain brain;

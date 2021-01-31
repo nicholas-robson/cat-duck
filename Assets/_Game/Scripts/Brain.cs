@@ -37,7 +37,7 @@ public class Brain : MonoBehaviour
 
             if (BrainDeathEffect)
                 Instantiate(BrainDeathEffect, _rb.position, Quaternion.identity);
-            Destroy(gameObject);
+            //Destroy(gameObject);
 
         }
     }

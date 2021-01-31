@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(GetComponentInChildren<Player>().gameObject);
+            // Destroy(GetComponentInChildren<Player>().gameObject);
+            Destroy(this.gameObject);
         }
     }
 

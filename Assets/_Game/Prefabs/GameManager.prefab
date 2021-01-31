@@ -877,19 +877,19 @@ MonoBehaviour:
   music:
   - name: Generic Background
     clip: {fileID: 8300000, guid: 4fff99673a41e24439d527ad0bd6b569, type: 3}
-    volume: 0
+    volume: 0.01
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: Boss Bitch
     clip: {fileID: 8300000, guid: 8f59b0114f1294424a1b891bb0a46c59, type: 3}
-    volume: 0.6
+    volume: 0.05
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: Squish
     clip: {fileID: 8300000, guid: f9f8d4a6425624f33bfc8de5d5488ca0, type: 3}
-    volume: 0.195
+    volume: 0.13
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -925,8 +925,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205490887310}
-  m_LocalRotation: {x: 0.3061791, y: 0.36105734, z: -0.12682353, w: 0.87166953}
-  m_LocalPosition: {x: -15, y: 15.93, z: -15}
+  m_LocalRotation: {x: 0.30617908, y: 0.36105734, z: -0.12682351, w: 0.8716696}
+  m_LocalPosition: {x: -15.000001, y: 15.93, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1927905205907899325}
@@ -1011,7 +1011,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205710592012}
   m_LocalRotation: {x: 0.3061791, y: 0.36105734, z: -0.12682353, w: 0.87166953}
-  m_LocalPosition: {x: -15, y: 15.93, z: -15}
+  m_LocalPosition: {x: -3.2204762, y: 18.384123, z: -0.11143875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1927905205462569790}

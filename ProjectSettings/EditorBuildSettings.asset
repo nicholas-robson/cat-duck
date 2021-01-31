@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/Levels/level_2.unity
     guid: e9d4e705f6c053b459c3d879e7e78a37
+  - enabled: 1
+    path: Assets/_Game/Scenes/Levels/credits.unity
+    guid: b4897b10ef0eb41fcae8601baecb4a37
   - enabled: 0
     path: Assets/_Game/Scenes/Scene_elNeko.unity
     guid: 09f428744d7c7b64680b1e80530ee9f2
