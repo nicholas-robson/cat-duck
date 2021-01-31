@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using _Game.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +25,11 @@ public class GameManager : MonoBehaviour
     private RaycastHit[] _raycastHits;
     private List<GameObject> _walls;
     private int _nextEntrance = 0;
+
+    [SerializeField]
+    TextMeshProUGUI controls;
+    [SerializeField]
+    TextMeshProUGUI hint;
 
     private void Awake()
     {
@@ -57,6 +64,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         PlayGenericBackgroundMusic();
+        StartCoroutine(DisableControls());
     }
 
     public static void ResetLevel(int entranceIndex = 0)
@@ -142,4 +150,21 @@ public class GameManager : MonoBehaviour
         ResetLevel(_instance._nextEntrance);
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
+    IEnumerator DisableControls()
+    {
+        yield return new WaitForSeconds(10);
+        controls.enabled = false;
+        StartCoroutine(EnableDisableHint());
+    }
+
+    IEnumerator EnableDisableHint()
+    {
+        yield return new WaitForSeconds(2);
+        hint.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5);
+        hint.gameObject.SetActive(false);
+
+    }
+
 }
