@@ -12,6 +12,7 @@ public class Body : MonoBehaviour
     [SerializeField] Transform _brainPlaceholderPosition;
     [SerializeField] Transform _attackParticlePosition;
     [SerializeField] GameObject collectableColliderObj;
+    [SerializeField] GameObject _meleeColliderObject;
     [SerializeField] float yeet = 10f;
     [SerializeField] float attackForce;
 
@@ -25,17 +26,21 @@ public class Body : MonoBehaviour
     [SerializeField] GameManager _gm;
 
 
-    SphereCollider _collectableCollider;
+    SphereCollider _meleeCollider;
 
     private void Awake()
     {
         //_triggerObj = _transform.Find("PlayerTrigger");
         _moveable = GetComponent<Moveable>();
         _audioSource = GetComponent<AudioSource>();
-        _collectableCollider = collectableColliderObj.GetComponent<SphereCollider>();
+
+        _meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
+        _meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
+
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
         _moveable.SetMaxAngularVelocity(1000);
+       
 
     }
 
@@ -64,7 +69,6 @@ public class Body : MonoBehaviour
 
     public void EjectBrain(Transform parent)
     {
-        StartCoroutine(DisableCollectableColliderForTime(1));
         Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
         //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
         _gm.Play("Squish");
@@ -95,6 +99,11 @@ public class Body : MonoBehaviour
      
     }
 
+    public void GetWrecked()
+    {
+        Debug.Log("Taking Damage!");
+    }
+
     private void FixedUpdate()
     {
         if (HasBrain())
@@ -110,6 +119,7 @@ public class Body : MonoBehaviour
     
     public void Attack(Vector3 direction)
     {
+        StartCoroutine(EnableMeleeColliderForTime(0.2f));
         _moveable.GetComponent<Rigidbody>().AddRelativeTorque(-Vector3.up * attackForce);
         Instantiate(AttackParticles, _attackParticlePosition.position, Quaternion.identity, _attackParticlePosition);
 
@@ -120,11 +130,12 @@ public class Body : MonoBehaviour
         _moveable.Move(direction);
     }
 
-    IEnumerator DisableCollectableColliderForTime(float time)
+    IEnumerator EnableMeleeColliderForTime(float time)
     {
-        _collectableCollider.enabled = false;
+        _meleeCollider.enabled = true;
         yield return new WaitForSeconds(time);
-        _collectableCollider.enabled = true;
+        _meleeCollider.enabled = false;
     }
+
 
 }
