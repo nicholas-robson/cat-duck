@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public static GameManager Instance { get => _instance; }
 
     public static Player player;
 
@@ -55,15 +54,16 @@ public class GameManager : MonoBehaviour
     public static void Play(string name)
     {
         Sound s = _instance.music.Find(sound => sound.name == name);
+
         if (s == null)
             return;
 
         s.source.Play();
     }
 
-    public void PlayBossBattleMusic()
+    public static void PlayBossBattleMusic()
     {
-        music[1].source.Play();
+        _instance.music[1].source.Play();
     }
 
     private void LoadScene(int doorIndex = 0)

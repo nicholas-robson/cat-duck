@@ -22,15 +22,13 @@ public class Body : MonoBehaviour
     [SerializeField] GameObject SetBrainParticles;
     [SerializeField] GameObject AttackParticles;
 
-
+    IEnumerator attackCoroutine;
 
 
     private void Awake()
     {
-        //_triggerObj = _transform.Find("PlayerTrigger");
         _moveable = GetComponent<Moveable>();
 
-        //_meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
 
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
@@ -55,8 +53,8 @@ public class Body : MonoBehaviour
         if (_moveable && _centerOfMass)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
 
+        GameManager.Play("Squish");
 
-        GameManager.Instance.Play("Squish");
 
 
     }
@@ -64,7 +62,9 @@ public class Body : MonoBehaviour
     public void EjectBrain(Transform parent)
     {
         Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
-        GameManager.Instance.Play("Squish");
+
+
+        GameManager.Play("Squish");
 
         _brain.transform.parent = parent;
         _brain.transform.localScale = Vector3.one * 0.5f;
@@ -112,7 +112,10 @@ public class Body : MonoBehaviour
     
     public void Attack(Vector3 direction)
     {
-        StartCoroutine(EnableMeleeColliderForTime(0.7f));
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+        attackCoroutine = EnableMeleeColliderForTime(0.7f);
+        StartCoroutine(attackCoroutine);
         _moveable.GetComponent<Rigidbody>().AddRelativeTorque(-Vector3.up * attackForce);
         Instantiate(AttackParticles, _attackParticlePosition.position, Quaternion.identity, _attackParticlePosition);
 
@@ -128,6 +131,7 @@ public class Body : MonoBehaviour
         _meleeColliderObject.SetActive(true);
         yield return new WaitForSeconds(time);
         _meleeColliderObject.SetActive(false);
+        attackCoroutine = null;
     }
 
 

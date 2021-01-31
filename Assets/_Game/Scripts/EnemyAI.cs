@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class EnemyAI : MonoBehaviour
 {
     public Brain brain;
     public LayerMask lineOfSightLayerMask;
     public float maxLineOfSightDistance;
+    public float maxBodySearchDistance = 10f;
 
     private List<Body> _targetBodies;
     private Body _nearestBody;
@@ -107,17 +109,53 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         
-        // Sort by distance.
-        bodyGameObjects.Sort((a, b) =>
-        {
-            var brainPosition = brain.transform.position;
-            return Vector3.Distance(brainPosition, a.transform.position)
-                .CompareTo(
-                    Vector3.Distance(brainPosition, b.transform.position)
-                );
-        });
+        var brainPosition = brain.transform.position;
         
-        _nearestBody = bodyGameObjects[0];
+        foreach (var body in bodyGameObjects)
+        {
+            var diff = body.transform.position - brainPosition;
+            var distance = diff.magnitude;
+
+            if (distance > maxLineOfSightDistance)
+            {
+                // Too far.
+                continue;
+            }
+            
+            if (Physics.Raycast(brainPosition, diff.normalized, out var hit, maxLineOfSightDistance, lineOfSightLayerMask))
+            {
+                // Hit a wall.
+                Debug.DrawLine(brainPosition, hit.point, Color.red);
+                if (hit.distance < distance)
+                {
+                    continue;
+                }
+            }
+
+            Debug.DrawLine(brainPosition, body.transform.position, Color.green);
+            _nearestBody = body;
+            return;
+        }
+
+        _nearestBody = null;
+        
+        //
+        //
+        // // Sort by distance.
+        // bodyGameObjects.Sort((a, b) =>
+        // {
+        //     return Vector3.Distance(brainPosition, a.transform.position)
+        //         .CompareTo(
+        //             Vector3.Distance(brainPosition, b.transform.position)
+        //         );
+        // });
+        //
+        // if (Vector3.Distance(brainPosition, bodyGameObjects[0].transform.position) > maxBodySearchDistance)
+        // {
+        //     return;
+        // }
+        //
+        // _nearestBody = bodyGameObjects[0];
     }
     
     public void OnCollectableEnter(Collider other)

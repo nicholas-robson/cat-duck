@@ -13,9 +13,9 @@ public class UIManager : MonoBehaviour
 
     private string[] sayingsArr = {
 "Where did my body go..."
-, "I missed my limbs..."
+, "I miss my heart..."
 ,"bla bla..."
-,".............."};
+,"<3 <3 <3"};
     [SerializeField] private Text sayBox;
     [SerializeField] private Image sayBoxBackground;
 

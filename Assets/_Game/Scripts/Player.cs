@@ -34,7 +34,11 @@ public class Player : MonoBehaviour
 
     public void OnCollectableEnter(Collider other)
     {
+        var body = other.GetComponentInParent<Body>();
+        if (body != null && body.HasBrain()) return;
+        
         collectable = other;
+        
         SetTooltipToPosition(other);
         tooltipText.gameObject.SetActive(true);
     }
