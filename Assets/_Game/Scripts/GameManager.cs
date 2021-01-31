@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     
     public LayerMask cameraRaycastLayerMask;
     public GameObject resetParticles;
+    public float sphereCastRadius = 3f;
 
     private Camera _camera;
     private RaycastHit[] _raycastHits;
@@ -65,6 +66,10 @@ public class GameManager : MonoBehaviour
     {
         var cameraPosition = _camera.transform.position;
         var playerPosition = player.GetPosition();
+        
+        // Account for spherecast diameter.
+        playerPosition -= (playerPosition - cameraPosition).normalized * (sphereCastRadius * 2f);
+        
         var diff = playerPosition - cameraPosition;
         
         foreach (var raycastHit in _raycastHits)
@@ -77,7 +82,7 @@ public class GameManager : MonoBehaviour
             raycastHit.collider.transform.Find("WallShort").gameObject.SetActive(false);
         }
 
-        _raycastHits = Physics.RaycastAll(cameraPosition, diff.normalized, diff.magnitude,
+        _raycastHits = Physics.SphereCastAll(cameraPosition, sphereCastRadius, diff.normalized, diff.magnitude,
             cameraRaycastLayerMask);
 
         foreach (var raycastHit in _raycastHits)
