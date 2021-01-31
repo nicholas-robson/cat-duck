@@ -1,10 +1,18 @@
 using UnityEngine;
+using System.Collections;
+using System;
 
 public class Brain : MonoBehaviour
 {
     private Player _player;
     private Rigidbody _rb;
     private Moveable _movable;
+    private bool isImmune = false;
+    public bool IsImmute { get => isImmune; }
+    [SerializeField]
+    float immunityPeriod = 1f;
+
+    public event Action OnDeathEvent;
 
     void Awake()
     {
@@ -20,8 +28,28 @@ public class Brain : MonoBehaviour
 
     public void GetWrecked()
     {
-        Destroy(gameObject);
+        if (!isImmune)
+        {
+            if (OnDeathEvent != null)
+                OnDeathEvent.Invoke();
+            Destroy(gameObject);
+        }
     }
+
+    public void SetImmune()
+    {
+        StartCoroutine(SetImmuneWhileBeingEjected(immunityPeriod));
+    }
+
+    IEnumerator SetImmuneWhileBeingEjected(float immunityPeriod)
+    {
+        isImmune = true;
+        yield return new WaitForSeconds(immunityPeriod);
+        isImmune = false;
+    }
+
+
+
 
 
 }

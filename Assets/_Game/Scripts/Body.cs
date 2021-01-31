@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Body : MonoBehaviour
 {
@@ -7,8 +8,11 @@ public class Body : MonoBehaviour
     
     private bool _hasBrain;
     private Brain _brain;
-    //private Transform _triggerObj;
+    private Transform _transform;
     private Moveable _moveable;
+
+    public event Action EjectBrainEvent;
+
     [SerializeField] Transform _brainPlaceholderPosition;
     [SerializeField] Transform _attackParticlePosition;
     [SerializeField] GameObject collectableColliderObj;
@@ -28,7 +32,7 @@ public class Body : MonoBehaviour
     private void Awake()
     {
         _moveable = GetComponent<Moveable>();
-
+        _transform = transform;
 
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
@@ -61,8 +65,9 @@ public class Body : MonoBehaviour
 
     public void EjectBrain(Transform parent)
     {
-        Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
 
+        Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
+        _transform.parent = null;
 
         GameManager.Play("Squish");
 
@@ -72,8 +77,8 @@ public class Body : MonoBehaviour
         rb.isKinematic = false;
         rb.detectCollisions = true;
 
-        Vector3 upAngle = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
-        Vector3 randomTorque = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20, 20));
+        Vector3 upAngle = new Vector3(UnityEngine.Random.Range(-1f, 1f), 1f, UnityEngine.Random.Range(-1f, 1f));
+        Vector3 randomTorque = new Vector3(UnityEngine.Random.Range(-20, 20), UnityEngine.Random.Range(-20, 20), UnityEngine.Random.Range(-20, 20));
 
         rb.AddTorque(randomTorque * 5);
         rb.AddForce(upAngle * yeet, ForceMode.Impulse);
@@ -86,15 +91,23 @@ public class Body : MonoBehaviour
             mrgb.AddForceAtPosition(upDirection, mrgb.transform.TransformPoint(Vector3.up), ForceMode.Impulse);
         }
 
+        _brain.SetImmune();
+
         _hasBrain = false;
         _brain = null;
+        if (EjectBrainEvent != null)
+            EjectBrainEvent.Invoke();
 
      
     }
 
     public void GetWrecked()
     {
-        Debug.Log("Taking Damage!");
+        if (HasBrain())
+        {
+            EjectBrain(transform.parent);
+        }
+
     }
 
     private void FixedUpdate()

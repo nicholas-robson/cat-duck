@@ -21,6 +21,11 @@ public class EnemyAI : MonoBehaviour
         _transform = transform;
     }
 
+    private void Start()
+    {
+        brain.OnDeathEvent += Death;
+    }
+
     // Update is called once per frame
     private void FixedUpdate()
     {
@@ -53,7 +58,7 @@ public class EnemyAI : MonoBehaviour
             newDirection = newDirection.normalized;
             if (playerDistance <= _body.minAttackDistance)
             {
-                _body.Attack(newDirection);
+                //_body.Attack(newDirection);
             }
             else
             {
@@ -89,13 +94,20 @@ public class EnemyAI : MonoBehaviour
     public void SetBody(Body body)
     {
         if (body.HasBrain()) return;
+
         _hasBody = true;
         _body = body;
+        _body.transform.parent = transform;
+        _body.EjectBrainEvent += EjectBody;
+
         body.SetBrain(brain);
     }
 
+
+
     public void EjectBody()
     {
+        _body.EjectBrainEvent -= EjectBody;
         _hasBody = false;
     }
 
@@ -163,7 +175,7 @@ public class EnemyAI : MonoBehaviour
         if (!_hasBody)
         {
             var body = other.GetComponentInParent<Body>();
-            if (body != null)
+            if (body != null && !brain.IsImmute)
             {
                 SetBody(body);
             }
@@ -172,5 +184,11 @@ public class EnemyAI : MonoBehaviour
 
     public void OnCollectableExit(Collider other)
     {
+    }
+
+
+    void Death()
+    {
+        Destroy(gameObject);
     }
 }

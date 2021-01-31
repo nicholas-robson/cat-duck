@@ -82,7 +82,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && _body)
         {
             _body.EjectBrain(transform);
-            _body.transform.parent = null;
             _body = null;
         } else if (Input.GetKeyDown(KeyCode.E) && collectable)
         {
@@ -127,6 +126,11 @@ public class Player : MonoBehaviour
     public Vector3 GetPosition()
     {
         return _body ? _body.transform.position : _brain.transform.position;
+    }
+
+    void PlayerDeath()
+    {
+        Debug.Log("Ded");
     }
 }
 
