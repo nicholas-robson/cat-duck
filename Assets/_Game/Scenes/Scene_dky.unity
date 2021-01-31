@@ -5057,7 +5057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 227536290564599789, guid: 81560a03a03f3a64fb9778336ad18ec8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.8315187
+      value: -7.95
       objectReference: {fileID: 0}
     - target: {fileID: 227536290564599789, guid: 81560a03a03f3a64fb9778336ad18ec8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5065,7 +5065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 227536290564599789, guid: 81560a03a03f3a64fb9778336ad18ec8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.3869915
+      value: 7.32
       objectReference: {fileID: 0}
     - target: {fileID: 227536290564599789, guid: 81560a03a03f3a64fb9778336ad18ec8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5311,22 +5311,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BodyZombie
       objectReference: {fileID: 0}
-    - target: {fileID: 5184798659863959101, guid: cce6cf46f94a2a4469f8d957cd13048c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 5184798659863959101, guid: cce6cf46f94a2a4469f8d957cd13048c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 5759477262490446326, guid: cce6cf46f94a2a4469f8d957cd13048c, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.9300003
-      objectReference: {fileID: 0}
-    - target: {fileID: 8008303615682735991, guid: cce6cf46f94a2a4469f8d957cd13048c, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -2432090755550338912, guid: e88d8c47a8a08f745ab3aa8041f36854, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cce6cf46f94a2a4469f8d957cd13048c, type: 3}
 --- !u!1 &547833102
@@ -5842,7 +5826,7 @@ GameObject:
   - component: {fileID: 988817040}
   - component: {fileID: 988817039}
   - component: {fileID: 988817038}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: PressurePlateLight_2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6439,7 +6423,7 @@ GameObject:
   - component: {fileID: 1524040770}
   - component: {fileID: 1524040769}
   - component: {fileID: 1524040768}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: PressurePlateLight_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

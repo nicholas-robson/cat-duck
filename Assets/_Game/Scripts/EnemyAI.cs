@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -110,21 +111,51 @@ public class EnemyAI : MonoBehaviour
         
         var brainPosition = brain.transform.position;
         
-        // Sort by distance.
-        bodyGameObjects.Sort((a, b) =>
+        foreach (var body in bodyGameObjects)
         {
-            return Vector3.Distance(brainPosition, a.transform.position)
-                .CompareTo(
-                    Vector3.Distance(brainPosition, b.transform.position)
-                );
-        });
+            var diff = body.transform.position - brainPosition;
+            var distance = diff.magnitude;
 
-        if (Vector3.Distance(brainPosition, bodyGameObjects[0].transform.position) > maxBodySearchDistance)
-        {
+            if (distance > maxLineOfSightDistance)
+            {
+                // Too far.
+                continue;
+            }
+            
+            if (Physics.Raycast(brainPosition, diff.normalized, out var hit, maxLineOfSightDistance, lineOfSightLayerMask))
+            {
+                // Hit a wall.
+                Debug.DrawLine(brainPosition, hit.point, Color.red);
+                if (hit.distance < distance)
+                {
+                    continue;
+                }
+            }
+
+            Debug.DrawLine(brainPosition, body.transform.position, Color.green);
+            _nearestBody = body;
             return;
         }
+
+        _nearestBody = null;
         
-        _nearestBody = bodyGameObjects[0];
+        //
+        //
+        // // Sort by distance.
+        // bodyGameObjects.Sort((a, b) =>
+        // {
+        //     return Vector3.Distance(brainPosition, a.transform.position)
+        //         .CompareTo(
+        //             Vector3.Distance(brainPosition, b.transform.position)
+        //         );
+        // });
+        //
+        // if (Vector3.Distance(brainPosition, bodyGameObjects[0].transform.position) > maxBodySearchDistance)
+        // {
+        //     return;
+        // }
+        //
+        // _nearestBody = bodyGameObjects[0];
     }
     
     public void OnCollectableEnter(Collider other)
