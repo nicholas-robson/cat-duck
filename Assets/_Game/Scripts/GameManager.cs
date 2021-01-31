@@ -9,17 +9,29 @@ public class GameManager : MonoBehaviour
     public static Player player;
 
     [SerializeField]
+
     List<Sound> music;
+
+    
+    public LayerMask cameraRaycastLayerMask;
+
+    private Camera _camera;
+    private RaycastHit[] _raycastHits;
+    private List<GameObject> _walls;
+
 
     private void Awake()
     {
         if (_instance == null)
         {
             _instance = this;
+            _camera = GetComponentInChildren<Camera>();
             player = GetComponentInChildren<Player>();
+            _raycastHits = new RaycastHit[2];
+            _walls = new List<GameObject>();
+            
             DontDestroyOnLoad(this);
         }
-
 
         foreach (Sound s in music)
         {
@@ -37,6 +49,31 @@ public class GameManager : MonoBehaviour
         PlayGenericBackgroundMusic();
     }
 
+    private void LateUpdate()
+    {
+        var cameraPosition = _camera.transform.position;
+        var playerPosition = player.GetPosition();
+        var diff = playerPosition - cameraPosition;
+
+        Physics.RaycastNonAlloc(cameraPosition, diff.normalized, _raycastHits, diff.magnitude,
+            cameraRaycastLayerMask);
+
+        foreach (var o in GameObject.FindGameObjectsWithTag("Wall"))
+        {
+            o.transform.Find("WallTall").gameObject.SetActive(true);
+            o.transform.Find("WallShort").gameObject.SetActive(false);
+        }
+        
+        foreach (var raycastHit in _raycastHits)
+        {
+            if (raycastHit.collider == null) continue;
+            
+            if (!raycastHit.collider.CompareTag("Wall")) continue;
+            
+            raycastHit.collider.transform.Find("WallTall").gameObject.SetActive(false);
+            raycastHit.collider.transform.Find("WallShort").gameObject.SetActive(true);
+        }
+    }
 
     public static void PlayGenericBackgroundMusic()
     {

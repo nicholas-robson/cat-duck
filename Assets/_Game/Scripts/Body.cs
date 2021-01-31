@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using System.Collections;
-using System;
+using Random = UnityEngine.Random;
+
 
 public class Body : MonoBehaviour
 {
@@ -36,9 +38,14 @@ public class Body : MonoBehaviour
 
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
-        _moveable.SetMaxAngularVelocity(1000);
+        
        
 
+    }
+
+    private void Start()
+    {
+        _moveable.SetMaxAngularVelocity(1000);
     }
 
     public void SetBrain(Brain brain)
@@ -77,8 +84,8 @@ public class Body : MonoBehaviour
         rb.isKinematic = false;
         rb.detectCollisions = true;
 
-        Vector3 upAngle = new Vector3(UnityEngine.Random.Range(-1f, 1f), 1f, UnityEngine.Random.Range(-1f, 1f));
-        Vector3 randomTorque = new Vector3(UnityEngine.Random.Range(-20, 20), UnityEngine.Random.Range(-20, 20), UnityEngine.Random.Range(-20, 20));
+        Vector3 upAngle = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
+        Vector3 randomTorque = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20, 20));
 
         rb.AddTorque(randomTorque * 5);
         rb.AddForce(upAngle * yeet, ForceMode.Impulse);
