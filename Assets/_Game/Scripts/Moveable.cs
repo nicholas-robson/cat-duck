@@ -5,12 +5,12 @@ using UnityEngine;
 public class Moveable: MonoBehaviour
 {
     public float forwardForce;
-    public float nextTimeToPlaySound;
-    public float soundCooldown;
     public float maxVelocity;
     public float turnCooldown = 1;
     float nextTimeToTurn;
-    
+    [SerializeField] float uprightForce = 50f;
+    [SerializeField] float turnForce = 1f;
+
     private bool _grounded = false;
     private CinemachineImpulseSource _impulse;
     private Rigidbody _rb;
@@ -22,6 +22,11 @@ public class Moveable: MonoBehaviour
         _impulse = GetComponent<CinemachineImpulseSource>();
         _rb = GetComponent<Rigidbody>();
 
+    }
+
+    public void SetMaxAngularVelocity(float number)
+    {
+        _rb.maxAngularVelocity = number;
     }
     
     public void OnGroundedTriggerEnter(Collider other)
@@ -56,8 +61,8 @@ public class Moveable: MonoBehaviour
 
     public void TryToGetYourselfUpBoy()
     {
-        float uprightStrength = 50.0f;
-        Vector3 upDirection = Vector3.up * uprightStrength;
+        
+        Vector3 upDirection = Vector3.up * uprightForce;
         _rb.AddForceAtPosition(upDirection, _rb.transform.TransformPoint(Vector3.up));
         _rb.AddForceAtPosition(-upDirection, _rb.transform.TransformPoint(-Vector3.up));
     }
@@ -77,7 +82,7 @@ public class Moveable: MonoBehaviour
         float angle = Vector3.SignedAngle(direction, _rb.transform.forward, Vector3.up);
         if (Time.time >= nextTimeToTurn)
         {
-            _rb.AddTorque(_rb.transform.up * angle * 0.2f, ForceMode.VelocityChange);
+            _rb.AddTorque(_rb.transform.up * angle * turnForce, ForceMode.VelocityChange);
             nextTimeToTurn = Time.time + turnCooldown;
         }
 

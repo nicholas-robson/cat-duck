@@ -49,6 +49,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static void Play(string name)
+    {
+        Sound s = Array.Find(_instance.music, sound => sound.name == name);
+        if (s == null)
+            return;
+
+        s.source.Play();
+    }
+
     public void PlayBossBattleMusic()
     {
         music[1].source.Play();

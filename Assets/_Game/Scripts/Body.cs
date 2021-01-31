@@ -10,26 +10,35 @@ public class Body : MonoBehaviour
     //private Transform _triggerObj;
     private Moveable _moveable;
     [SerializeField] Transform _brainPlaceholderPosition;
+    [SerializeField] Transform _attackParticlePosition;
     [SerializeField] GameObject collectableColliderObj;
+    [SerializeField] GameObject _meleeColliderObject;
     [SerializeField] float yeet = 10f;
+    [SerializeField] float attackForce;
 
     [SerializeField]
     private Transform _centerOfMass;
 
     AudioSource _audioSource;
     [SerializeField] GameObject SetBrainParticles;
+    [SerializeField] GameObject AttackParticles;
 
 
-    SphereCollider _collectableCollider;
+    SphereCollider _meleeCollider;
 
     private void Awake()
     {
         //_triggerObj = _transform.Find("PlayerTrigger");
         _moveable = GetComponent<Moveable>();
         _audioSource = GetComponent<AudioSource>();
-        _collectableCollider = collectableColliderObj.GetComponent<SphereCollider>();
+
+        _meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
+        _meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
+
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
+        _moveable.SetMaxAngularVelocity(1000);
+       
 
     }
 
@@ -49,16 +58,18 @@ public class Body : MonoBehaviour
         if (_moveable && _centerOfMass)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
 
-        _audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+
+        //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        GameManager.Play("Squish");
 
 
     }
 
     public void EjectBrain(Transform parent)
     {
-        StartCoroutine(DisableCollectableColliderForTime(1));
         Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
-        _audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        GameManager.Play("Squish");
 
         _brain.transform.parent = parent;
         _brain.transform.localScale = Vector3.one * 0.5f;
@@ -86,6 +97,11 @@ public class Body : MonoBehaviour
      
     }
 
+    public void GetWrecked()
+    {
+        Debug.Log("Taking Damage!");
+    }
+
     private void FixedUpdate()
     {
         if (HasBrain())
@@ -101,19 +117,23 @@ public class Body : MonoBehaviour
     
     public void Attack(Vector3 direction)
     {
-        
+        StartCoroutine(EnableMeleeColliderForTime(0.2f));
+        _moveable.GetComponent<Rigidbody>().AddRelativeTorque(-Vector3.up * attackForce);
+        Instantiate(AttackParticles, _attackParticlePosition.position, Quaternion.identity, _attackParticlePosition);
+
     }
-    
+
     public void Move(Vector3 direction)
     {
         _moveable.Move(direction);
     }
 
-    IEnumerator DisableCollectableColliderForTime(float time)
+    IEnumerator EnableMeleeColliderForTime(float time)
     {
-        _collectableCollider.enabled = false;
+        _meleeCollider.enabled = true;
         yield return new WaitForSeconds(time);
-        _collectableCollider.enabled = true;
+        _meleeCollider.enabled = false;
     }
+
 
 }

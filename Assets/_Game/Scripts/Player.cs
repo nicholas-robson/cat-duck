@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
 
     [SerializeField] Camera _camera;
-
-    [SerializeField]
-    GameEvent OnAbleToPickUp;
+    [SerializeField] Canvas _canvas;
+    [SerializeField] TextMeshProUGUI tooltipText;
 
     public Brain _brain;
     public Body _body;
@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleInputs();
+        if (collectable)
+            SetTooltipToPosition(collectable);
 
     }
 
@@ -32,12 +34,34 @@ public class Player : MonoBehaviour
 
     public void OnCollectableEnter(Collider other)
     {
+        var body = other.GetComponentInParent<Body>();
+        if (body != null && body.HasBrain()) return;
+        
         collectable = other;
+        
+        SetTooltipToPosition(other);
+        tooltipText.gameObject.SetActive(true);
     }
 
     public void OnCollectableExit(Collider other)
     {
         collectable = null;
+        tooltipText.gameObject.SetActive(false);
+    }
+
+    void SetTooltipToPosition(Collider other)
+    {
+        float offsetY = other.transform.position.y;
+        float offsetX = other.transform.position.x + 1.5f;
+
+        Vector3 offsetPos = new Vector3(offsetX, offsetY, other.transform.position.z);
+
+        Vector2 canvasPos;
+        Vector2 screenPoint = _camera.WorldToScreenPoint(offsetPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
+
+        tooltipText.transform.localPosition = canvasPos;
+
     }
 
     public void SetBody(Body body)
@@ -65,6 +89,10 @@ public class Player : MonoBehaviour
             SetBody(collectable.GetComponentInParent<Body>());
 
         }
+        if (Input.GetKeyDown(KeyCode.Space) && _body)
+        {
+            _body.Attack(inputDirection);
+        } 
 
     }
 
