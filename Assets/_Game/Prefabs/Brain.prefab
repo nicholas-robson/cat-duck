@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688df5cd5d6004a6aa8cb378db904c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immunityPeriod: 1
 --- !u!65 &5058239895990213486
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -205,8 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d7c28dde51e42819254f574b202315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardForce: 0.5
-  maxVelocity: 2
+  forwardForce: 1.75
+  maxVelocity: 4
   turnCooldown: 1
   uprightForce: 50
   turnForce: 1

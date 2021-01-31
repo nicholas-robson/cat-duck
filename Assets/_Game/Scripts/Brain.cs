@@ -32,7 +32,6 @@ public class Brain : MonoBehaviour
         {
             if (OnDeathEvent != null)
                 OnDeathEvent.Invoke();
-            Destroy(gameObject);
         }
     }
 
