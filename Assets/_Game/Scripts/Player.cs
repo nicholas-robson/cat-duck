@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 using TMPro;
 
@@ -127,6 +124,18 @@ public class Player : MonoBehaviour
     public Vector3 GetPosition()
     {
         return _body ? _body.transform.position : _brain.transform.position;
+    }
+
+    public void ResetPosition(Vector3 position)
+    {
+        if (_body)
+        {
+            _body.transform.position = position;
+        }
+        else
+        {
+            _brain.transform.position = position;
+        }
     }
 }
 

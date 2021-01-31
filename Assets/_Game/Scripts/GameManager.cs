@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using _Game.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,10 +13,13 @@ public class GameManager : MonoBehaviour
     Sound[] music;
     
     public LayerMask cameraRaycastLayerMask;
+    public GameObject resetParticles;
 
     private Camera _camera;
     private RaycastHit[] _raycastHits;
     private List<GameObject> _walls;
+    private int _nextEntrance = 0;
+
 
     private void Awake()
     {
@@ -25,6 +30,8 @@ public class GameManager : MonoBehaviour
             player = GetComponentInChildren<Player>();
             _raycastHits = new RaycastHit[2];
             _walls = new List<GameObject>();
+            
+            SceneManager.sceneLoaded += OnSceneLoaded;
             
             DontDestroyOnLoad(this);
         }
@@ -45,6 +52,12 @@ public class GameManager : MonoBehaviour
         PlayGenericBackgroundMusic();
     }
 
+    private static void ResetLevel(Vector3 position)
+    {
+        player.ResetPosition(position);
+        Instantiate(_instance.resetParticles, position, Quaternion.identity);
+    }
+    
     private void LateUpdate()
     {
         var cameraPosition = _camera.transform.position;
@@ -98,8 +111,18 @@ public class GameManager : MonoBehaviour
         music[1].source.Play();
     }
 
-    private void LoadScene(int doorIndex = 0)
+    private void LoadScene(string sceneName, int entranceIndex = 0)
     {
+        SceneManager.LoadScene(sceneName);
+
+        _nextEntrance = entranceIndex;
         
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        ResetLevel(LevelManager.GetEntrance(_nextEntrance).position);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

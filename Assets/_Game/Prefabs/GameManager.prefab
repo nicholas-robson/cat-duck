@@ -304,6 +304,7 @@ MonoBehaviour:
   cameraRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  resetParticles: {fileID: 9165347174511659982, guid: f9c352dc2d7cc4fd5a766e502f376073, type: 3}
 --- !u!114 &156728559
 MonoBehaviour:
   m_ObjectHideFlags: 0
