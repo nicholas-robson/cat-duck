@@ -897,6 +897,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   resetParticles: {fileID: 9165347174511659982, guid: f9c352dc2d7cc4fd5a766e502f376073, type: 3}
+  sphereCastRadius: 3
   controls: {fileID: 1401942461}
   hint: {fileID: 69753410}
 --- !u!1 &1927905205490887310
@@ -924,7 +925,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205490887310}
-  m_LocalRotation: {x: 0.3061791, y: 0.3610573, z: -0.12682351, w: 0.87166953}
+  m_LocalRotation: {x: 0.3061791, y: 0.36105734, z: -0.12682353, w: 0.87166953}
   m_LocalPosition: {x: -15, y: 15.93, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1009,7 +1010,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205710592012}
-  m_LocalRotation: {x: 0.3061791, y: 0.3610573, z: -0.12682351, w: 0.87166953}
+  m_LocalRotation: {x: 0.3061791, y: 0.36105734, z: -0.12682353, w: 0.87166953}
   m_LocalPosition: {x: -15, y: 15.93, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
