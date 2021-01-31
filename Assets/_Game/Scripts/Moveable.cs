@@ -47,10 +47,12 @@ public class Moveable: MonoBehaviour
 
     private void FixedUpdate()
     {
-        var velocityMagnitude = _rb.velocity.magnitude;
+        var planarVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+        
+        var velocityMagnitude = planarVelocity.magnitude;
         if (velocityMagnitude > maxVelocity)
         {
-            _rb.AddForce(_rb.velocity.normalized * (-1 * (velocityMagnitude - maxVelocity)), ForceMode.VelocityChange);
+            _rb.AddForce(planarVelocity.normalized * (-1 * (velocityMagnitude - maxVelocity)), ForceMode.VelocityChange);
         }
     }
 

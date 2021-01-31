@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
     private List<GameObject> _walls;
     private int _nextEntrance = 0;
 
-
-
     private void Awake()
     {
         if (_instance == null)
@@ -68,15 +66,6 @@ public class GameManager : MonoBehaviour
         var cameraPosition = _camera.transform.position;
         var playerPosition = player.GetPosition();
         var diff = playerPosition - cameraPosition;
-
-        Physics.RaycastNonAlloc(cameraPosition, diff.normalized, _raycastHits, diff.magnitude,
-            cameraRaycastLayerMask);
-
-        foreach (var o in GameObject.FindGameObjectsWithTag("Wall"))
-        {
-            o.transform.Find("WallTall").gameObject.SetActive(true);
-            o.transform.Find("WallShort").gameObject.SetActive(false);
-        }
         
         foreach (var raycastHit in _raycastHits)
         {
@@ -84,6 +73,19 @@ public class GameManager : MonoBehaviour
             
             if (!raycastHit.collider.CompareTag("Wall")) continue;
             
+            raycastHit.collider.transform.Find("WallTall").gameObject.SetActive(true);
+            raycastHit.collider.transform.Find("WallShort").gameObject.SetActive(false);
+        }
+
+        _raycastHits = Physics.RaycastAll(cameraPosition, diff.normalized, diff.magnitude,
+            cameraRaycastLayerMask);
+
+        foreach (var raycastHit in _raycastHits)
+        {
+            if (raycastHit.collider == null) continue;
+
+            if (!raycastHit.collider.CompareTag("Wall")) continue;
+
             raycastHit.collider.transform.Find("WallTall").gameObject.SetActive(false);
             raycastHit.collider.transform.Find("WallShort").gameObject.SetActive(true);
         }
@@ -117,18 +119,18 @@ public class GameManager : MonoBehaviour
         _instance.music[1].source.Play();
     }
 
-    private void LoadScene(string sceneName, int entranceIndex = 0)
+    public static void LoadScene(string sceneName, int entranceIndex = 0)
     {
         SceneManager.LoadScene(sceneName);
 
-        _nextEntrance = entranceIndex;
+        _instance._nextEntrance = entranceIndex;
         
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    private static void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        ResetLevel(_nextEntrance);
+        ResetLevel(_instance._nextEntrance);
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

@@ -22,7 +22,7 @@ TagManager:
   - CollectableTrigger
   - PressurePlateTrigger
   - Limb
-  - 
+  - ExitTrigger
   - 
   - 
   - 
