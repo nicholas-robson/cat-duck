@@ -23,8 +23,6 @@ public class Body : MonoBehaviour
     [SerializeField] GameObject SetBrainParticles;
     [SerializeField] GameObject AttackParticles;
 
-    [SerializeField] GameManager _gm;
-
 
     SphereCollider _meleeCollider;
 
@@ -62,7 +60,7 @@ public class Body : MonoBehaviour
 
 
         //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
-        _gm.Play("Squish");
+        GameManager.Play("Squish");
 
 
     }
@@ -71,7 +69,7 @@ public class Body : MonoBehaviour
     {
         Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
         //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
-        _gm.Play("Squish");
+        GameManager.Play("Squish");
 
         _brain.transform.parent = parent;
         _brain.transform.localScale = Vector3.one * 0.5f;
