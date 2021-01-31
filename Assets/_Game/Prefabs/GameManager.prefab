@@ -303,29 +303,6 @@ MonoBehaviour:
   cameraRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 64
-<<<<<<< HEAD
-  resetParticles: {fileID: 9165347174511659982, guid: f9c352dc2d7cc4fd5a766e502f376073, type: 3}
---- !u!114 &156728559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927905205462569789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc3cd3d59fb994da18086d43858fcdd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    source: {fileID: 0}
-=======
->>>>>>> 3df808e40e35ad89eb58820bac94124a32f56202
 --- !u!1 &1927905205490887310
 GameObject:
   m_ObjectHideFlags: 0
