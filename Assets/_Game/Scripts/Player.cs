@@ -23,6 +23,11 @@ public class Player : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        _brain.OnDeathEvent += PlayerDeath;
+    }
+
     private void FixedUpdate()
     {
 
@@ -66,9 +71,9 @@ public class Player : MonoBehaviour
         if (body.HasBrain()) return;
         
         _body = body;
-        // TODO make more efficient? Don't overengineer tho
         _body.transform.parent = transform;
         _body.SetBrain(_brain);
+        _body.EjectBrainEvent += SetBodyToNull;
     }
 
 
@@ -78,9 +83,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && _body)
         {
-            _body.EjectBrain(transform);
-            _body.transform.parent = null;
-            _body = null;
+            RemoveBrain();
+            SetBodyToNull();
+
         } else if (Input.GetKeyDown(KeyCode.E) && collectable)
         {
             SetBody(collectable.GetComponentInParent<Body>());
@@ -90,6 +95,18 @@ public class Player : MonoBehaviour
         {
             _body.Attack(inputDirection);
         } 
+
+    }
+
+    void RemoveBrain()
+    {
+        _body.EjectBrain(transform);
+    }
+
+    void SetBodyToNull()
+    {
+        _body.EjectBrainEvent -= SetBodyToNull;
+        _body = null;
 
     }
 
@@ -126,7 +143,7 @@ public class Player : MonoBehaviour
         return _body ? _body.transform.position : _brain.transform.position;
     }
 
-    public void ResetPosition(Vector3 position)
+    public void SetPosition(Vector3 position)
     {
         if (_body)
         {
@@ -136,6 +153,11 @@ public class Player : MonoBehaviour
         {
             _brain.transform.position = position;
         }
+    }
+
+    void PlayerDeath()
+    {
+        GameManager.ResetLevel();
     }
 }
 

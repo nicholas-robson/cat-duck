@@ -3,14 +3,18 @@ using UnityEngine;
 using System.Collections;
 using Random = UnityEngine.Random;
 
+
 public class Body : MonoBehaviour
 {
     public float minAttackDistance = 2f;
     
     private bool _hasBrain;
     private Brain _brain;
-    //private Transform _triggerObj;
+    private Transform _transform;
     private Moveable _moveable;
+
+    public event Action EjectBrainEvent;
+
     [SerializeField] Transform _brainPlaceholderPosition;
     [SerializeField] Transform _attackParticlePosition;
     [SerializeField] GameObject collectableColliderObj;
@@ -21,21 +25,16 @@ public class Body : MonoBehaviour
     [SerializeField]
     private Transform _centerOfMass;
 
-    AudioSource _audioSource;
     [SerializeField] GameObject SetBrainParticles;
     [SerializeField] GameObject AttackParticles;
 
+    IEnumerator attackCoroutine;
 
-    SphereCollider _meleeCollider;
 
     private void Awake()
     {
-        //_triggerObj = _transform.Find("PlayerTrigger");
         _moveable = GetComponent<Moveable>();
-        _audioSource = GetComponent<AudioSource>();
-
-        _meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
-        _meleeCollider = _meleeColliderObject.GetComponent<SphereCollider>();
+        _transform = transform;
 
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
@@ -65,30 +64,32 @@ public class Body : MonoBehaviour
         if (_moveable && _centerOfMass)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
 
-
-        //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
         GameManager.Play("Squish");
+
 
 
     }
 
     public void EjectBrain(Transform parent)
     {
+
         Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
-        //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        _transform.parent = null;
+
         GameManager.Play("Squish");
 
         _brain.transform.parent = parent;
         _brain.transform.localScale = Vector3.one * 0.5f;
         Rigidbody rb = _brain.GetComponent<Rigidbody>();
         rb.isKinematic = false;
-        rb.detectCollisions = true;
 
+        rb.position = rb.transform.TransformPoint(rb.position + Vector3.up);
         Vector3 upAngle = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
-        Vector3 randomTorque = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20, 20));
+        Vector3 randomTorque = new Vector3(90, Random.Range(-20, 20), 90);
 
         rb.AddTorque(randomTorque * 5);
         rb.AddForce(upAngle * yeet, ForceMode.Impulse);
+        rb.detectCollisions = true;
 
         if (_moveable && _centerOfMass)
         {
@@ -98,15 +99,24 @@ public class Body : MonoBehaviour
             mrgb.AddForceAtPosition(upDirection, mrgb.transform.TransformPoint(Vector3.up), ForceMode.Impulse);
         }
 
+        _brain.SetImmune();
+
         _hasBrain = false;
         _brain = null;
+
 
      
     }
 
     public void GetWrecked()
     {
-        Debug.Log("Taking Damage!");
+        if (HasBrain())
+        {
+            if (EjectBrainEvent != null)
+                EjectBrainEvent.Invoke();
+            EjectBrain(transform.parent);
+        }
+
     }
 
     private void FixedUpdate()
@@ -124,7 +134,10 @@ public class Body : MonoBehaviour
     
     public void Attack(Vector3 direction)
     {
-        StartCoroutine(EnableMeleeColliderForTime(0.2f));
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+        attackCoroutine = EnableMeleeColliderForTime(0.7f);
+        StartCoroutine(attackCoroutine);
         _moveable.GetComponent<Rigidbody>().AddRelativeTorque(-Vector3.up * attackForce);
         Instantiate(AttackParticles, _attackParticlePosition.position, Quaternion.identity, _attackParticlePosition);
 
@@ -137,9 +150,10 @@ public class Body : MonoBehaviour
 
     IEnumerator EnableMeleeColliderForTime(float time)
     {
-        _meleeCollider.enabled = true;
+        _meleeColliderObject.SetActive(true);
         yield return new WaitForSeconds(time);
-        _meleeCollider.enabled = false;
+        _meleeColliderObject.SetActive(false);
+        attackCoroutine = null;
     }
 
 

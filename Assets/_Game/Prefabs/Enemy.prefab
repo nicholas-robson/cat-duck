@@ -49,6 +49,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   maxLineOfSightDistance: 20
+  maxBodySearchDistance: 10
+  attackCooldown: 0.8
 --- !u!1001 &545717906039876195
 PrefabInstance:
   m_ObjectHideFlags: 0

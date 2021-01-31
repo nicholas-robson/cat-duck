@@ -9,8 +9,11 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     public static Player player;
+
     [SerializeField]
-    Sound[] music;
+
+    List<Sound> music;
+
     
     public LayerMask cameraRaycastLayerMask;
     public GameObject resetParticles;
@@ -19,6 +22,7 @@ public class GameManager : MonoBehaviour
     private RaycastHit[] _raycastHits;
     private List<GameObject> _walls;
     private int _nextEntrance = 0;
+
 
 
     private void Awake()
@@ -52,9 +56,10 @@ public class GameManager : MonoBehaviour
         PlayGenericBackgroundMusic();
     }
 
-    private static void ResetLevel(Vector3 position)
+    public static void ResetLevel(int entranceIndex = 0)
     {
-        player.ResetPosition(position);
+        var position = LevelManager.GetEntrance(entranceIndex).position;
+        player.SetPosition(position);
         Instantiate(_instance.resetParticles, position, Quaternion.identity);
     }
     
@@ -84,14 +89,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayGenericBackgroundMusic()
+    public static void PlayGenericBackgroundMusic()
     {
-        music[0].source.Play();
+        _instance.music[0].source.Play();
     }
 
-    public void StopAllBackgroundMusic()
+    public static void StopAllBackgroundMusic()
     {
-        foreach(Sound s in music)
+        foreach(Sound s in _instance.music)
         {
             s.source.Stop();
         }
@@ -99,16 +104,17 @@ public class GameManager : MonoBehaviour
 
     public static void Play(string name)
     {
-        Sound s = Array.Find(_instance.music, sound => sound.name == name);
+        Sound s = _instance.music.Find(sound => sound.name == name);
+
         if (s == null)
             return;
 
         s.source.Play();
     }
 
-    public void PlayBossBattleMusic()
+    public static void PlayBossBattleMusic()
     {
-        music[1].source.Play();
+        _instance.music[1].source.Play();
     }
 
     private void LoadScene(string sceneName, int entranceIndex = 0)
@@ -122,7 +128,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        ResetLevel(LevelManager.GetEntrance(_nextEntrance).position);
+        ResetLevel(_nextEntrance);
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
