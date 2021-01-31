@@ -51,6 +51,7 @@ MonoBehaviour:
   maxLineOfSightDistance: 20
   maxBodySearchDistance: 10
   attackCooldown: 0.8
+  ejectionCooldown: 2
 --- !u!1001 &545717906039876195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58,6 +59,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 227536290564599789}
     m_Modifications:
+    - target: {fileID: 974426916688971537, guid: 19c1906af20429048b614aa5dcf6ba7e, type: 3}
+      propertyPath: BrainDeathEffect
+      value: 
+      objectReference: {fileID: 3452126102323657021, guid: 9d280def9c32e4487a64089fb2110e48, type: 3}
     - target: {fileID: 3111814936838196906, guid: 19c1906af20429048b614aa5dcf6ba7e, type: 3}
       propertyPath: m_Name
       value: Brain

@@ -19,6 +19,10 @@ public class EnemyAI : MonoBehaviour
     private float attackCooldown = 0.2f;
     private float timeToNextAttack;
 
+    [SerializeField]
+    float ejectionCooldown = 3f;
+    private float timeToMove;
+
     private void Awake()
     {
         _transform = transform;
@@ -32,6 +36,9 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if (Time.time < timeToMove)
+            return;
+
         if (HasBody())
         {
             var playerPosition = GameManager.player.GetPosition();
@@ -114,6 +121,7 @@ public class EnemyAI : MonoBehaviour
 
     public void EjectBody()
     {
+        timeToMove = Time.time + ejectionCooldown;
         _body.EjectBrainEvent -= EjectBody;
         _hasBody = false;
     }
