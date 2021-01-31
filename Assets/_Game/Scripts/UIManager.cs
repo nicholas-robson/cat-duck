@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
         {
             case performAction.Load:
                 print("Loaded");
-                SceneManager.LoadScene("");
+                SceneManager.LoadScene("level_1");
 
                 break;
             case performAction.Quit:

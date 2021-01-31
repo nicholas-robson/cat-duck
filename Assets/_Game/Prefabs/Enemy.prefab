@@ -51,6 +51,7 @@ MonoBehaviour:
   maxLineOfSightDistance: 20
   maxBodySearchDistance: 10
   attackCooldown: 0.8
+  ejectionCooldown: 2
 --- !u!1001 &545717906039876195
 PrefabInstance:
   m_ObjectHideFlags: 0

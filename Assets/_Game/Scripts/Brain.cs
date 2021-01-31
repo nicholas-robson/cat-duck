@@ -34,9 +34,11 @@ public class Brain : MonoBehaviour
         {
             if (OnDeathEvent != null)
                 OnDeathEvent.Invoke();
+
             if (BrainDeathEffect)
                 Instantiate(BrainDeathEffect, _rb.position, Quaternion.identity);
             Destroy(gameObject);
+
         }
     }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using _Game.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,11 +16,12 @@ public class GameManager : MonoBehaviour
 
     
     public LayerMask cameraRaycastLayerMask;
+    public GameObject resetParticles;
 
     private Camera _camera;
     private RaycastHit[] _raycastHits;
     private List<GameObject> _walls;
-
+    private int _nextEntrance = 0;
 
     private void Awake()
     {
@@ -29,6 +32,8 @@ public class GameManager : MonoBehaviour
             player = GetComponentInChildren<Player>();
             _raycastHits = new RaycastHit[2];
             _walls = new List<GameObject>();
+            
+            SceneManager.sceneLoaded += OnSceneLoaded;
             
             DontDestroyOnLoad(this);
         }
@@ -49,20 +54,18 @@ public class GameManager : MonoBehaviour
         PlayGenericBackgroundMusic();
     }
 
+    public static void ResetLevel(int entranceIndex = 0)
+    {
+        var position = LevelManager.GetEntrance(entranceIndex).position;
+        player.SetPosition(position);
+        Instantiate(_instance.resetParticles, position, Quaternion.identity);
+    }
+    
     private void LateUpdate()
     {
         var cameraPosition = _camera.transform.position;
         var playerPosition = player.GetPosition();
         var diff = playerPosition - cameraPosition;
-
-        Physics.RaycastNonAlloc(cameraPosition, diff.normalized, _raycastHits, diff.magnitude,
-            cameraRaycastLayerMask);
-
-        foreach (var o in GameObject.FindGameObjectsWithTag("Wall"))
-        {
-            o.transform.Find("WallTall").gameObject.SetActive(true);
-            o.transform.Find("WallShort").gameObject.SetActive(false);
-        }
         
         foreach (var raycastHit in _raycastHits)
         {
@@ -70,6 +73,19 @@ public class GameManager : MonoBehaviour
             
             if (!raycastHit.collider.CompareTag("Wall")) continue;
             
+            raycastHit.collider.transform.Find("WallTall").gameObject.SetActive(true);
+            raycastHit.collider.transform.Find("WallShort").gameObject.SetActive(false);
+        }
+
+        _raycastHits = Physics.RaycastAll(cameraPosition, diff.normalized, diff.magnitude,
+            cameraRaycastLayerMask);
+
+        foreach (var raycastHit in _raycastHits)
+        {
+            if (raycastHit.collider == null) continue;
+
+            if (!raycastHit.collider.CompareTag("Wall")) continue;
+
             raycastHit.collider.transform.Find("WallTall").gameObject.SetActive(false);
             raycastHit.collider.transform.Find("WallShort").gameObject.SetActive(true);
         }
@@ -103,8 +119,18 @@ public class GameManager : MonoBehaviour
         _instance.music[1].source.Play();
     }
 
-    private void LoadScene(int doorIndex = 0)
+    public static void LoadScene(string sceneName, int entranceIndex = 0)
     {
+        SceneManager.LoadScene(sceneName);
+
+        _instance._nextEntrance = entranceIndex;
         
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private static void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        ResetLevel(_instance._nextEntrance);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
