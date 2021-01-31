@@ -102,8 +102,7 @@ public class Body : MonoBehaviour
 
         _hasBrain = false;
         _brain = null;
-        if (EjectBrainEvent != null)
-            EjectBrainEvent.Invoke();
+
 
      
     }
@@ -112,6 +111,8 @@ public class Body : MonoBehaviour
     {
         if (HasBrain())
         {
+            if (EjectBrainEvent != null)
+                EjectBrainEvent.Invoke();
             EjectBrain(transform.parent);
         }
 

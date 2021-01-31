@@ -15,6 +15,9 @@ public class EnemyAI : MonoBehaviour
     private Transform _transform;
     private Body _body;
     private bool _hasBody;
+    [SerializeField]
+    private float attackCooldown = 0.2f;
+    private float timeToNextAttack;
 
     private void Awake()
     {
@@ -58,7 +61,11 @@ public class EnemyAI : MonoBehaviour
             newDirection = newDirection.normalized;
             if (playerDistance <= _body.minAttackDistance)
             {
-                //_body.Attack(newDirection);
+                if (Time.time >= timeToNextAttack)
+                {
+                    _body.Attack(newDirection);
+                    timeToNextAttack = Time.time + attackCooldown;
+                }
             }
             else
             {
