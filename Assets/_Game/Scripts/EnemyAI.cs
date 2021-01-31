@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     public Brain brain;
     public LayerMask lineOfSightLayerMask;
     public float maxLineOfSightDistance;
+    public float maxBodySearchDistance = 10f;
 
     private List<Body> _targetBodies;
     private Body _nearestBody;
@@ -107,15 +108,21 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         
+        var brainPosition = brain.transform.position;
+        
         // Sort by distance.
         bodyGameObjects.Sort((a, b) =>
         {
-            var brainPosition = brain.transform.position;
             return Vector3.Distance(brainPosition, a.transform.position)
                 .CompareTo(
                     Vector3.Distance(brainPosition, b.transform.position)
                 );
         });
+
+        if (Vector3.Distance(brainPosition, bodyGameObjects[0].transform.position) > maxBodySearchDistance)
+        {
+            return;
+        }
         
         _nearestBody = bodyGameObjects[0];
     }

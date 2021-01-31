@@ -204,7 +204,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205490887310}
-  m_LocalRotation: {x: 0.42470825, y: 0.33985108, z: -0.17591983, w: 0.82047325}
+  m_LocalRotation: {x: 0.42470822, y: 0.3398511, z: -0.17591983, w: 0.8204733}
   m_LocalPosition: {x: -5, y: 8.93, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -289,7 +289,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205710592012}
-  m_LocalRotation: {x: 0.42470822, y: 0.33985108, z: -0.17591983, w: 0.82047325}
+  m_LocalRotation: {x: 0.42470822, y: 0.3398511, z: -0.17591983, w: 0.8204733}
   m_LocalPosition: {x: -5, y: 8.93, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 5309197181716752775}
   - component: {fileID: 3568721771997653235}
   - component: {fileID: 2104376523169220093}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 1927905205710592049}
-  _canvas: {fileID: 0}
+  _canvas: {fileID: 1431946228}
   tooltipText: {fileID: 0}
   _brain: {fileID: 5788358877185193614}
   _body: {fileID: 0}
