@@ -63,7 +63,7 @@ public class EnemyAI : MonoBehaviour
             {
                 if (Time.time >= timeToNextAttack)
                 {
-                    _body.Attack(newDirection);
+                    //_body.Attack(newDirection);
                     timeToNextAttack = Time.time + attackCooldown;
                 }
             }

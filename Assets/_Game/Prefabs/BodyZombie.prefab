@@ -183,7 +183,7 @@ MonoBehaviour:
   _attackParticlePosition: {fileID: 4046774548356919817}
   collectableColliderObj: {fileID: 4363773141403037987}
   _meleeColliderObject: {fileID: 6456722910773378411}
-  yeet: 1000
+  yeet: 100
   attackForce: 1500
   _centerOfMass: {fileID: 9094424204015156306}
   SetBrainParticles: {fileID: 9165347174511659982, guid: f9c352dc2d7cc4fd5a766e502f376073, type: 3}

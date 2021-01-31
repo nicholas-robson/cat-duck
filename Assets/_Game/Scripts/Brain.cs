@@ -11,6 +11,8 @@ public class Brain : MonoBehaviour
     public bool IsImmute { get => isImmune; }
     [SerializeField]
     float immunityPeriod = 1f;
+    [SerializeField]
+    private GameObject BrainDeathEffect;
 
     public event Action OnDeathEvent;
 
@@ -32,6 +34,8 @@ public class Brain : MonoBehaviour
         {
             if (OnDeathEvent != null)
                 OnDeathEvent.Invoke();
+            if (BrainDeathEffect)
+                Instantiate(BrainDeathEffect, _rb.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
