@@ -16,6 +16,7 @@ public class PressurePlate : MonoBehaviour
     private void Awake()
     {
         _colliders = new List<Collider>();
+        SetLights(lightsInactive);
     }
 
     public bool IsActivated()

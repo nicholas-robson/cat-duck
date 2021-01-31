@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class Body : MonoBehaviour
 {
@@ -37,9 +39,14 @@ public class Body : MonoBehaviour
 
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
-        _moveable.SetMaxAngularVelocity(1000);
+        
        
 
+    }
+
+    private void Start()
+    {
+        _moveable.SetMaxAngularVelocity(1000);
     }
 
     public void SetBrain(Brain brain)

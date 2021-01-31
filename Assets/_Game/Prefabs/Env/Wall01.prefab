@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 691851519867507963}
   - component: {fileID: 7744828438609495402}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall01
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,11 +99,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a49247fccaf0be74c981f3daecd95f35, type: 3}
       propertyPath: m_Name
-      value: GGJ walls 2.1
+      value: WallTall
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a49247fccaf0be74c981f3daecd95f35, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a49247fccaf0be74c981f3daecd95f35, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: a49247fccaf0be74c981f3daecd95f35, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: a49247fccaf0be74c981f3daecd95f35, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a49247fccaf0be74c981f3daecd95f35, type: 3}
@@ -125,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 7.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}
       propertyPath: m_LocalPosition.y
@@ -165,11 +177,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}
       propertyPath: m_Name
-      value: GGJ low walls
+      value: WallShort
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0f248d67a533c94c9fffd4b773b5728, type: 3}

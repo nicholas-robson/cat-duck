@@ -301,6 +301,9 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  cameraRaycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &156728559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,8 +348,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205490887310}
-  m_LocalRotation: {x: 0.42470822, y: 0.33985114, z: -0.17591985, w: 0.8204733}
-  m_LocalPosition: {x: -5, y: 8.93, z: -5}
+  m_LocalRotation: {x: 0.3061791, y: 0.3610573, z: -0.12682351, w: 0.87166953}
+  m_LocalPosition: {x: -15, y: 15.93, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1927905205907899325}
@@ -430,8 +433,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927905205710592012}
-  m_LocalRotation: {x: 0.42470822, y: 0.33985114, z: -0.17591985, w: 0.8204733}
-  m_LocalPosition: {x: -5, y: 8.93, z: -5}
+  m_LocalRotation: {x: 0.3061791, y: 0.3610573, z: -0.12682351, w: 0.87166953}
+  m_LocalPosition: {x: -15, y: 15.93, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1927905205462569790}
@@ -639,7 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: -5, y: 10, z: -5}
+  m_FollowOffset: {x: -15, y: 17, z: -15}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0

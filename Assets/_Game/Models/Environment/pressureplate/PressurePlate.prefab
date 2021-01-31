@@ -9,8 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2851087212005852925}
-  m_Layer: 0
-  m_Name: GameObject
+  - component: {fileID: 400047636}
+  - component: {fileID: 400047635}
+  m_Layer: 14
+  m_Name: PressurePlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,6 +35,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &400047636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2162873117415767194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.2683067, y: 0.7307285, z: 2.1761932}
+  m_Center: {x: 0.024799347, y: 0.19594532, z: 0}
+--- !u!114 &400047635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2162873117415767194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10cf0ac1c12db29498d38a9e2234a68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 1389461712967489576}
+  lightsInactive: {fileID: 2100000, guid: 9e5af40957efb394891cc5e6e2be8f93, type: 2}
+  lightsActive: {fileID: 2100000, guid: 746e1b085df21a84fb591064b3af7a0c, type: 2}
+  door: {fileID: 0}
 --- !u!1001 &378377283462730565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93,6 +125,11 @@ PrefabInstance:
 --- !u!4 &201251718059717806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c43b6f590668bd4181c5691609b7a69, type: 3}
+  m_PrefabInstance: {fileID: 378377283462730565}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1389461712967489576 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 4c43b6f590668bd4181c5691609b7a69, type: 3}
   m_PrefabInstance: {fileID: 378377283462730565}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2124256343639258587
