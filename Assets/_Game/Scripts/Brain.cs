@@ -18,5 +18,10 @@ public class Brain : MonoBehaviour
         _movable.Move(direction);
     }
 
+    public void GetWrecked()
+    {
+        Destroy(gameObject);
+    }
+
 
 }

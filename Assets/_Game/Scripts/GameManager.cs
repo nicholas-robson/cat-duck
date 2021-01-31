@@ -1,13 +1,16 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+    public static GameManager Instance { get => _instance; }
 
     public static Player player;
+
     [SerializeField]
-    Sound[] music;
+    List<Sound> music;
 
     private void Awake()
     {
@@ -36,22 +39,22 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void PlayGenericBackgroundMusic()
+    public static void PlayGenericBackgroundMusic()
     {
-        music[0].source.Play();
+        _instance.music[0].source.Play();
     }
 
-    public void StopAllBackgroundMusic()
+    public static void StopAllBackgroundMusic()
     {
-        foreach(Sound s in music)
+        foreach(Sound s in _instance.music)
         {
             s.source.Stop();
         }
     }
 
-    public void Play(string name)
+    public static void Play(string name)
     {
-        Sound s = Array.Find(music, sound => sound.name == name);
+        Sound s = _instance.music.Find(sound => sound.name == name);
         if (s == null)
             return;
 
