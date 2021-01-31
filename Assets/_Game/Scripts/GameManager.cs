@@ -36,17 +36,21 @@ public class GameManager : MonoBehaviour
             
             SceneManager.sceneLoaded += OnSceneLoaded;
             
+            foreach (Sound s in music)
+            {
+                s.source = gameObject.AddComponent<AudioSource>();
+                s.source.clip = s.clip;
+
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
+            }
+            
             DontDestroyOnLoad(this);
         }
-
-        foreach (Sound s in music)
+        else
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            Destroy(GetComponentInChildren<Player>().gameObject);
         }
     }
 
