@@ -85,6 +85,10 @@ public class Player : MonoBehaviour
             SetBody(collectable.GetComponentInParent<Body>());
 
         }
+        if (Input.GetKeyDown(KeyCode.Space) && _body)
+        {
+            _body.Attack(inputDirection);
+        } 
 
     }
 

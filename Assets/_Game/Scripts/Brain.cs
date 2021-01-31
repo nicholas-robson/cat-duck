@@ -10,10 +10,13 @@ public class Brain : MonoBehaviour
     {
         _player = GetComponentInParent<Player>();
         _movable = GetComponent<Moveable>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     public void Move(Vector3 direction)
     {
         _movable.Move(direction);
     }
+
+
 }

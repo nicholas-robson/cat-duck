@@ -10,14 +10,19 @@ public class Body : MonoBehaviour
     //private Transform _triggerObj;
     private Moveable _moveable;
     [SerializeField] Transform _brainPlaceholderPosition;
+    [SerializeField] Transform _attackParticlePosition;
     [SerializeField] GameObject collectableColliderObj;
     [SerializeField] float yeet = 10f;
+    [SerializeField] float attackForce;
 
     [SerializeField]
     private Transform _centerOfMass;
 
     AudioSource _audioSource;
     [SerializeField] GameObject SetBrainParticles;
+    [SerializeField] GameObject AttackParticles;
+
+    [SerializeField] GameManager _gm;
 
 
     SphereCollider _collectableCollider;
@@ -30,6 +35,7 @@ public class Body : MonoBehaviour
         _collectableCollider = collectableColliderObj.GetComponent<SphereCollider>();
         if (_centerOfMass && _moveable)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
+        _moveable.SetMaxAngularVelocity(1000);
 
     }
 
@@ -49,7 +55,9 @@ public class Body : MonoBehaviour
         if (_moveable && _centerOfMass)
             _moveable.GetComponent<Rigidbody>().centerOfMass = _centerOfMass.transform.localPosition;
 
-        _audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+
+        //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        _gm.Play("Squish");
 
 
     }
@@ -58,7 +66,8 @@ public class Body : MonoBehaviour
     {
         StartCoroutine(DisableCollectableColliderForTime(1));
         Instantiate(SetBrainParticles, _brainPlaceholderPosition.position, Quaternion.identity);
-        _audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        //_audioSource.PlayOneShot(_audioSource.clip, 1.0f);
+        _gm.Play("Squish");
 
         _brain.transform.parent = parent;
         _brain.transform.localScale = Vector3.one * 0.5f;
@@ -101,9 +110,11 @@ public class Body : MonoBehaviour
     
     public void Attack(Vector3 direction)
     {
-        
+        _moveable.GetComponent<Rigidbody>().AddRelativeTorque(-Vector3.up * attackForce);
+        Instantiate(AttackParticles, _attackParticlePosition.position, Quaternion.identity, _attackParticlePosition);
+
     }
-    
+
     public void Move(Vector3 direction)
     {
         _moveable.Move(direction);
