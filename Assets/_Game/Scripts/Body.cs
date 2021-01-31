@@ -82,13 +82,14 @@ public class Body : MonoBehaviour
         _brain.transform.localScale = Vector3.one * 0.5f;
         Rigidbody rb = _brain.GetComponent<Rigidbody>();
         rb.isKinematic = false;
-        rb.detectCollisions = true;
 
+        rb.position = rb.transform.TransformPoint(rb.position + Vector3.up);
         Vector3 upAngle = new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
-        Vector3 randomTorque = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), Random.Range(-20, 20));
+        Vector3 randomTorque = new Vector3(90, Random.Range(-20, 20), 90);
 
         rb.AddTorque(randomTorque * 5);
         rb.AddForce(upAngle * yeet, ForceMode.Impulse);
+        rb.detectCollisions = true;
 
         if (_moveable && _centerOfMass)
         {
